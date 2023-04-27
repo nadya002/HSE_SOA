@@ -7,7 +7,7 @@ import (
 	"net"
 	"os"
 
-	"HW1/cmd/ditio"
+	"HW1/cmd/dto"
 	"HW1/cmd/server/testProtocols"
 )
 
@@ -43,7 +43,7 @@ func handleConnection(conn net.Conn) {
 		input := make([]byte, (1024 * 4))
 		n, err := conn.Read(input)
 		if n == 0 || err != nil {
-			fmt.Println("Read error:", err)
+			//fmt.Println("Read error:", err)
 			break
 		}
 
@@ -54,11 +54,11 @@ func handleConnection(conn net.Conn) {
 			fmt.Println("test json")
 			res, er := testProtocols.Test_json()
 			if er != nil {
-				an, _ = json.Marshal(ditio.Ans{ditio.Answer{}, "", er})
+				an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", er})
 
 			} else {
 
-				an, _ = json.Marshal(ditio.Ans{res, "json", nil})
+				an, _ = json.Marshal(dto.Ans{res, "json", nil})
 			}
 			//conn.Write(an)
 
@@ -67,11 +67,11 @@ func handleConnection(conn net.Conn) {
 			fmt.Println("test xml")
 			res, er := testProtocols.Test_xml()
 			if er != nil {
-				an, _ = json.Marshal(ditio.Ans{ditio.Answer{}, "", er})
+				an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", er})
 
 			} else {
 
-				an, _ = json.Marshal(ditio.Ans{res, "xml", nil})
+				an, _ = json.Marshal(dto.Ans{res, "xml", nil})
 			}
 			//conn.Write(an)
 
@@ -79,16 +79,16 @@ func handleConnection(conn net.Conn) {
 			fmt.Println("test msgpack")
 			res, er := testProtocols.Test_msgpack()
 			if er != nil {
-				an, _ = json.Marshal(ditio.Ans{ditio.Answer{}, "", er})
+				an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", er})
 
 			} else {
 
-				an, _ = json.Marshal(ditio.Ans{res, "msgpack", nil})
+				an, _ = json.Marshal(dto.Ans{res, "msgpack", nil})
 			}
 
 		} else {
 			//fmt.Println("AAA")
-			an, _ = json.Marshal(ditio.Ans{ditio.Answer{}, "", errors.New("fail request")})
+			an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", errors.New("fail request")})
 
 		}
 		// отправляем данные клиенту

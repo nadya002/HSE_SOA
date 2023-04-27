@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net"
 	"os"
 )
@@ -20,35 +19,26 @@ func main() {
 		return
 	}
 	defer conn.Close()
-	for {
-		var source string
-		fmt.Print("Введите слово: ")
 
-		file, err := os.Open("../../text.txt")
+	file, err := os.Open("inp.txt")
+	if err != nil {
+		fmt.Println("error ", err)
+	}
+	fileScanner := bufio.NewScanner(file)
+
+	for fileScanner.Scan() {
+		//var source string
+		//fmt.Print("Введите слово: ")
 
 		//handle errors while opening
-		if err != nil {
-			log.Fatalf("Error when opening file: %s", err)
-		}
-
-		fileScanner := bufio.NewScanner(file)
+		// if err != nil {
+		// 	log.Fatalf("Error when opening file: %s", err)
+		// }
 
 		// read line by line
-		for fileScanner.Scan() {
-			fmt.Println(fileScanner.Text())
-		}
 
-		//fmt.Println(source, len(source))
+		source := fileScanner.Text()
 
-		// scanner := bufio.NewScanner(os.Stdin)
-		// scanner.Scan()
-		// source = scanner.Text()
-		// fmt.Println(source)
-
-		if err != nil {
-			fmt.Println("Некорректный ввод", err)
-			continue
-		}
 		// отправляем сообщение серверу
 		if n, err := conn.Write([]byte(source)); n == 0 || err != nil {
 			fmt.Println(err)
@@ -71,4 +61,5 @@ func main() {
 		// fmt.Print(string(buff[0:n]))
 		// fmt.Println()
 	}
+	file.Close()
 }

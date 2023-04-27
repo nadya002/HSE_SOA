@@ -187,7 +187,7 @@ func Prepare_data() Message {
 	return mes
 }
 
-func Test_method(Des func(b []byte) (Message, error), Ser func(m Message) ([]byte, error)) (ditio.Answer, error) {
+func Test_method(Des func(b []byte) (Message, error), Ser func(m Message) ([]byte, error)) (dto.Answer, error) {
 	rand.Seed(time.Now().UnixNano())
 
 	mes := Prepare_data()
