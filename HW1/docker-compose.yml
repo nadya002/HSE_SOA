@@ -1,0 +1,25 @@
+# Файл docker-compose должен начинаться с тега версии.
+# Мы используем "3" так как это - самая свежая версия на момент написания этого кода.
+
+version: "3"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: docker/server.dockerfile
+
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "4545"
+
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client.dockerfile
+    depends_on:
+      - server
+    environment:
+      SERVER_HOST: "server"
+      SERVER_PORT: "4545"
