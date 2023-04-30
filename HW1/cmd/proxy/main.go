@@ -15,7 +15,7 @@ func CheckError(err error) {
 func main() {
 	listener, _ := net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("localhost"), Port: 2000}) // открываем слушающий UDP-сокет
 	for {
-		handleClient(listener) // обрабатываем запрос клиента
+		go handleClient(listener) // обрабатываем запрос клиента
 	}
 }
 
