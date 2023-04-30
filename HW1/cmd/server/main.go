@@ -9,13 +9,13 @@ import (
 	"HW1/cmd/server/testProtocols"
 )
 
-func handlReq(test_func func() (dto.Answer, error)) []byte {
+func handlReq(test_func func() (dto.Answer, error), name string) []byte {
 	an, er := test_func()
 	if er != nil {
 		fmt.Println("error ", er)
 		return []byte("error")
 	} else {
-		res := fmt.Sprintln("json", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+		res := fmt.Sprintln(name, "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
 		return []byte(res)
 	}
 }
@@ -42,17 +42,17 @@ func handleClient(conn *net.UDPConn, str string) {
 	var res []byte
 	if "get_result" == string(buf[:readLen]) || "get_result" == string(buf[:readLen-1]) {
 		if str == "json" {
-			res = handlReq(testProtocols.Test_json)
+			res = handlReq(testProtocols.Test_json, "json")
 		} else if str == "xml" {
-			res = handlReq(testProtocols.Test_xml)
+			res = handlReq(testProtocols.Test_xml, "xml")
 		} else if str == "msgpack" {
-			res = handlReq(testProtocols.Test_msgpack)
+			res = handlReq(testProtocols.Test_msgpack, "msgpack")
 		} else if str == "avro" {
-			res = handlReq(testProtocols.Test_avro)
+			res = handlReq(testProtocols.Test_avro, "avro")
 		} else if str == "yaml" {
-			res = handlReq(testProtocols.Test_yaml)
+			res = handlReq(testProtocols.Test_yaml, "yaml")
 		} else if str == "protobuf" {
-			res = handlReq(testProtocols.Test_protobuf)
+			res = handlReq(testProtocols.Test_protobuf, "protobuf")
 
 		} else {
 			res = []byte("No such format " + str) // пишем в сокет
