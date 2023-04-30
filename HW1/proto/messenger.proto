@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+message ProtoMessage {
+  string str = 1;
+  int64 numb = 2;
+  map<string, string> map = 3;
+  repeated string arr = 4;
+  float float_numb = 5;
+}
+
+

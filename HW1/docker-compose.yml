@@ -4,22 +4,90 @@
 version: "3"
 
 services:
-  server:
+
+  proxy:
+    build:
+      context: .
+      dockerfile: docker/proxy_server.dockerfile
+    ports:
+       - "2000:2000/udp"
+
+  server_json:
     build:
       context: .
       dockerfile: docker/server.dockerfile
 
-    environment:
-      HOST: "0.0.0.0"
-      PORT: "4545"
+      args:
+        format: "json"
+        #ARG: "value"
+    ports:
+       - "8080:8080/udp"
 
-
-  client:
+  server_xml:
     build:
       context: .
-      dockerfile: docker/client.dockerfile
-    depends_on:
-      - server
-    environment:
-      SERVER_HOST: "server"
-      SERVER_PORT: "4545"
+      dockerfile: docker/server.dockerfile
+
+      args:
+        format: "xml"
+        #ARG: "value"
+    ports:
+       - "8081:8080/udp"
+
+  server_msgpack:
+    build:
+      context: .
+      dockerfile: docker/server.dockerfile
+
+      args:
+        format: "msgpack"
+        #ARG: "value"
+    ports:
+       - "8082:8080/udp" 
+
+  server_avro:
+    build:
+      context: .
+      dockerfile: docker/server.dockerfile
+
+      args:
+        format: "avro"
+        #ARG: "value"
+    ports:
+       - "8083:8080/udp"
+ 
+
+  server_yaml:
+    build:
+      context: .
+      dockerfile: docker/server.dockerfile
+
+      args:
+        format: "yaml"
+        #ARG: "value"
+    ports:
+       - "8084:8080/udp" 
+
+  server_protobuf:
+    build:
+      context: .
+      dockerfile: docker/server.dockerfile
+
+      args:
+        format: "protobuf"
+        #ARG: "value"
+    ports:
+      - "8085:8080/udp"
+
+ 
+
+
+  # client:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/client.dockerfile
+  #   depends_on:
+  #     - server
+  #   environment:
+  #     SERVER_HOST: "server"
+  #     SERVER_PORT: "4545"

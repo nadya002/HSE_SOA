@@ -1,98 +1,99 @@
 package main
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
 	"net"
 	"os"
 
-	"HW1/cmd/dto"
 	"HW1/cmd/server/testProtocols"
 )
 
 func main() {
+	str := os.Args[1]
+	//var str string
 
-	host := os.Getenv("HOST")
-	port := os.Getenv("PORT")
+	//flag.IntVar(&a, "a", 0, "The integer param")
+	//flag.StringVar(&str, "format", "json", "The name of a format")
 
-	listener, err := net.Listen("tcp", fmt.Sprintf("%v:%v", host, port))
+	//flag.Parse()
 
+	fmt.Println(str)
+	//fmt.Println("dump:", dump)
+
+	listener, _ := net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("localhost"), Port: 8080}) // открываем слушающий UDP-сокет
+	for {
+		handleClient(listener, str) // обрабатываем запрос клиента
+	}
+}
+
+func handleClient(conn *net.UDPConn, str string) {
+	buf := make([]byte, 128) // буфер для чтения клиентских данных
+
+	readLen, addr, err := conn.ReadFromUDP(buf) // читаем из сокета
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	defer listener.Close()
-	fmt.Println("Server is listening...")
-	for {
-		conn, err := listener.Accept()
-		if err != nil {
-			fmt.Println(err)
-			conn.Close()
-			continue
-		}
-		go handleConnection(conn) // запускаем горутину для обработки запроса
-	}
-}
 
-// обработка подключения
-func handleConnection(conn net.Conn) {
-	defer conn.Close()
-	for {
-		// считываем полученные в запросе данные
-		input := make([]byte, (1024 * 4))
-		n, err := conn.Read(input)
-		if n == 0 || err != nil {
-			//fmt.Println("Read error:", err)
-			break
-		}
-
-		str := string(input[0:n])
-		var an []byte
+	fmt.Println(string(buf[:readLen]))
+	if "get_result" == string(buf[:readLen]) || "get_result" == string(buf[:readLen-1]) {
 		if str == "json" {
-
-			fmt.Println("test json")
-			res, er := testProtocols.Test_json()
+			an, er := testProtocols.Test_json()
 			if er != nil {
-				an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", er})
-
+				fmt.Println("error ", er)
 			} else {
-
-				an, _ = json.Marshal(dto.Ans{res, "json", nil})
+				res := fmt.Sprintln("json", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+				conn.WriteToUDP([]byte(res), addr)
 			}
-			//conn.Write(an)
-
 		} else if str == "xml" {
-
-			fmt.Println("test xml")
-			res, er := testProtocols.Test_xml()
+			an, er := testProtocols.Test_xml()
 			if er != nil {
-				an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", er})
-
+				fmt.Println("error ", er)
 			} else {
-
-				an, _ = json.Marshal(dto.Ans{res, "xml", nil})
+				res := fmt.Sprintln("xml", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+				conn.WriteToUDP([]byte(res), addr)
 			}
-			//conn.Write(an)
 
 		} else if str == "msgpack" {
-			fmt.Println("test msgpack")
-			res, er := testProtocols.Test_msgpack()
+			an, er := testProtocols.Test_msgpack()
 			if er != nil {
-				an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", er})
-
+				fmt.Println("error ", er)
 			} else {
+				res := fmt.Sprintln("xml", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+				conn.WriteToUDP([]byte(res), addr)
+			}
 
-				an, _ = json.Marshal(dto.Ans{res, "msgpack", nil})
+		} else if str == "avro" {
+			an, er := testProtocols.Test_avro()
+			if er != nil {
+				fmt.Println("error ", er)
+			} else {
+				res := fmt.Sprintln("xml", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+				conn.WriteToUDP([]byte(res), addr)
+			}
+
+		} else if str == "yaml" {
+			an, er := testProtocols.Test_yaml()
+			if er != nil {
+				fmt.Println("error ", er)
+			} else {
+				res := fmt.Sprintln("xml", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+				conn.WriteToUDP([]byte(res), addr)
+			}
+
+		} else if str == "protobuf" {
+			an, er := testProtocols.Test_protobuf()
+			if er != nil {
+				fmt.Println("error ", er)
+			} else {
+				res := fmt.Sprintln("xml", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+				conn.WriteToUDP([]byte(res), addr)
 			}
 
 		} else {
-			//fmt.Println("AAA")
-			an, _ = json.Marshal(dto.Ans{dto.Answer{}, "", errors.New("fail request")})
-
+			conn.WriteToUDP([]byte("No such format "+str), addr) // пишем в сокет
 		}
-		// отправляем данные клиенту
-
-		conn.Write(an)
+	} else {
+		conn.WriteToUDP(append([]byte("Wrong querry, you said: "), buf[:readLen]...), addr) // пишем в сокет
 	}
 }

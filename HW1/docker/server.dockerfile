@@ -8,4 +8,12 @@ COPY . /server
 
 RUN go build -o bin/server ./cmd/server
 
-CMD ["./bin/server"]
+#ARG format="json"
+#ENV format
+ARG format
+ENV envFormat=$format
+
+#EXPOSE 8080
+
+#ENTRYPOINT ["./bin/server", "${format}"]
+CMD ["sh", "-c", "./bin/server ${envFormat}"]
