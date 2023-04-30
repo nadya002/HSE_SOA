@@ -15,7 +15,7 @@ func CheckError(err error) {
 func main() {
 	listener, _ := net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("localhost"), Port: 2000}) // открываем слушающий UDP-сокет
 	for {
-		go handleClient(listener) // обрабатываем запрос клиента
+		handleClient(listener) // обрабатываем запрос клиента
 	}
 }
 
@@ -30,16 +30,15 @@ func handleClient(conn *net.UDPConn) {
 
 	words := strings.Fields(string(buf[:readLen]))
 	if len(words) != 2 {
-		conn.WriteToUDP([]byte("Wrong request\n"), addr)
+		conn.WriteToUDP([]byte("Wrong number of params\n"), addr)
 		return
 	}
 	var res []byte
 
 	if "get_result" == words[0] {
-		fmt.Println("aaa")
 
 		if words[1] == "json" {
-			fmt.Println("json")
+
 			ServerAddr, err := net.ResolveUDPAddr("udp", "server_json:8080")
 			CheckError(err)
 			res = get_ans(ServerAddr)
@@ -69,6 +68,8 @@ func handleClient(conn *net.UDPConn) {
 			CheckError(err)
 			res = get_ans(ServerAddr)
 
+		} else {
+			res = []byte("wrong format\n")
 		}
 		//fmt.Println(string(res))
 		conn.WriteToUDP(res, addr)
@@ -77,11 +78,6 @@ func handleClient(conn *net.UDPConn) {
 }
 
 func get_ans(ServerAddr *net.UDPAddr) []byte {
-	//ServerAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:10001")
-	//CheckError(err)
-
-	//LocalAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:0")
-	//CheckError(err)
 
 	Conn, err := net.DialUDP("udp", nil, ServerAddr)
 	CheckError(err)
