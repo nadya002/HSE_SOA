@@ -5,8 +5,20 @@ import (
 	"net"
 	"os"
 
+	"HW1/cmd/dto"
 	"HW1/cmd/server/testProtocols"
 )
+
+func handlReq(test_func func() (dto.Answer, error)) []byte {
+	an, er := test_func()
+	if er != nil {
+		fmt.Println("error ", er)
+		return []byte("error")
+	} else {
+		res := fmt.Sprintln("json", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
+		return []byte(res)
+	}
+}
 
 func main() {
 	str := os.Args[1]
@@ -27,69 +39,26 @@ func handleClient(conn *net.UDPConn, str string) {
 	}
 
 	//fmt.Println(string(buf[:readLen]))
+	var res []byte
 	if "get_result" == string(buf[:readLen]) || "get_result" == string(buf[:readLen-1]) {
 		if str == "json" {
-			an, er := testProtocols.Test_json()
-			if er != nil {
-				fmt.Println("error ", er)
-				conn.WriteToUDP([]byte("error"), addr)
-			} else {
-				res := fmt.Sprintln("json", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
-				conn.WriteToUDP([]byte(res), addr)
-			}
+			res = handlReq(testProtocols.Test_json)
 		} else if str == "xml" {
-			an, er := testProtocols.Test_xml()
-			if er != nil {
-				fmt.Println("error ", er)
-			} else {
-				res := fmt.Sprintln("xml", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
-				conn.WriteToUDP([]byte(res), addr)
-			}
-
+			res = handlReq(testProtocols.Test_xml)
 		} else if str == "msgpack" {
-			an, er := testProtocols.Test_msgpack()
-			if er != nil {
-				fmt.Println("error ", er)
-				conn.WriteToUDP([]byte("error"), addr)
-			} else {
-				res := fmt.Sprintln("msgpack", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
-				conn.WriteToUDP([]byte(res), addr)
-			}
-
+			res = handlReq(testProtocols.Test_msgpack)
 		} else if str == "avro" {
-			an, er := testProtocols.Test_avro()
-			if er != nil {
-				fmt.Println("error ", er)
-				conn.WriteToUDP([]byte("error"), addr)
-			} else {
-				res := fmt.Sprintln("avro", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
-				conn.WriteToUDP([]byte(res), addr)
-			}
-
+			res = handlReq(testProtocols.Test_avro)
 		} else if str == "yaml" {
-			an, er := testProtocols.Test_yaml()
-			if er != nil {
-				fmt.Println("error ", er)
-				conn.WriteToUDP([]byte("error"), addr)
-			} else {
-				res := fmt.Sprintln("yaml", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
-				conn.WriteToUDP([]byte(res), addr)
-			}
-
+			res = handlReq(testProtocols.Test_yaml)
 		} else if str == "protobuf" {
-			an, er := testProtocols.Test_protobuf()
-			if er != nil {
-				fmt.Println("error ", er)
-				conn.WriteToUDP([]byte("error"), addr)
-			} else {
-				res := fmt.Sprintln("protobuf", "-", an.Mem, "-", an.TimeOfSer, "-", an.TimeOfDes)
-				conn.WriteToUDP([]byte(res), addr)
-			}
+			res = handlReq(testProtocols.Test_protobuf)
 
 		} else {
-			conn.WriteToUDP([]byte("No such format "+str), addr) // пишем в сокет
+			res = []byte("No such format " + str) // пишем в сокет
 		}
 	} else {
 		conn.WriteToUDP(append([]byte("Wrong req, you said: "), buf[:readLen]...), addr) // пишем в сокет
 	}
+	conn.WriteToUDP(res, addr)
 }
