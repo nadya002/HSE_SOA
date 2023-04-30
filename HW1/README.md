@@ -19,3 +19,14 @@ nc -u 127.0.0.1 2000
 4) avro
 5) yaml
 6) protobuf
+
+Пример взаимодействия:
+```bash
+$ nc -u 127.0.0.1 2000
+get_result avro
+avro - 66176 - 173.61µs - 798.267µs
+get_result json
+json - 78063 - 1.07782ms - 1.859386ms
+get_result
+Wrong number of params
+```
