@@ -1,0 +1,38 @@
+version: "1.0"
+project: basic
+targets:
+  - name: golang
+    plugins:
+      - name: go-grpc
+        out: internal
+        opts: paths=import
+      - name: go
+        out: internal
+        opts: paths=import
+     
+src:
+  - path: pkg/proto/*
+# create_dirs:
+#   - proto
+#   - docs
+deps:
+  - name: protoc-gen-validate
+    git: git@github.com:envoyproxy/protoc-gen-validate.git
+  - name: googleapis
+    git: git@github.com:googleapis/googleapis.git
+imports:
+  - path: .
+    from: protoc-gen-validate
+  - path: .
+  - path: .
+    from: googleapis
+plugins:
+  - name: validate
+    git: github.com/envoyproxy/protoc-gen-validate
+    version: v0.6.7
+  - name: grpc-gateway
+    git: github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+    version: v2.11.3
+  - name: openapiv2
+    git: github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+    version: v2.11.3

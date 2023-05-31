@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+//package game;
+
+option go_package = "./game";
+
+service ConnectToGame {
+    rpc Do(JoinGameRoomRequest) returns (stream GameRoom) {}
+}
+
+message JoinGameRoomRequest {
+    string name = 1;
+}
+
+message GameRoom {
+    int32 roomNumb = 1;
+}
