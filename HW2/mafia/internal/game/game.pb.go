@@ -20,6 +20,202 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Checks struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RoomNumb int32 `protobuf:"varint,1,opt,name=roomNumb,proto3" json:"roomNumb,omitempty"`
+	PubCheck bool  `protobuf:"varint,2,opt,name=pubCheck,proto3" json:"pubCheck,omitempty"`
+}
+
+func (x *Checks) Reset() {
+	*x = Checks{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Checks) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Checks) ProtoMessage() {}
+
+func (x *Checks) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Checks.ProtoReflect.Descriptor instead.
+func (*Checks) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Checks) GetRoomNumb() int32 {
+	if x != nil {
+		return x.RoomNumb
+	}
+	return 0
+}
+
+func (x *Checks) GetPubCheck() bool {
+	if x != nil {
+		return x.PubCheck
+	}
+	return false
+}
+
+type PubResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Suc bool `protobuf:"varint,1,opt,name=suc,proto3" json:"suc,omitempty"`
+}
+
+func (x *PubResp) Reset() {
+	*x = PubResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PubResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PubResp) ProtoMessage() {}
+
+func (x *PubResp) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PubResp.ProtoReflect.Descriptor instead.
+func (*PubResp) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PubResp) GetSuc() bool {
+	if x != nil {
+		return x.Suc
+	}
+	return false
+}
+
+type FinishDayRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RoomNumb int32 `protobuf:"varint,1,opt,name=roomNumb,proto3" json:"roomNumb,omitempty"`
+}
+
+func (x *FinishDayRequest) Reset() {
+	*x = FinishDayRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinishDayRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinishDayRequest) ProtoMessage() {}
+
+func (x *FinishDayRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinishDayRequest.ProtoReflect.Descriptor instead.
+func (*FinishDayRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *FinishDayRequest) GetRoomNumb() int32 {
+	if x != nil {
+		return x.RoomNumb
+	}
+	return 0
+}
+
+type FinishDayResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Suc bool `protobuf:"varint,1,opt,name=suc,proto3" json:"suc,omitempty"`
+}
+
+func (x *FinishDayResp) Reset() {
+	*x = FinishDayResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinishDayResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinishDayResp) ProtoMessage() {}
+
+func (x *FinishDayResp) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinishDayResp.ProtoReflect.Descriptor instead.
+func (*FinishDayResp) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *FinishDayResp) GetSuc() bool {
+	if x != nil {
+		return x.Suc
+	}
+	return false
+}
+
 type JoinGameRoomRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -31,7 +227,7 @@ type JoinGameRoomRequest struct {
 func (x *JoinGameRoomRequest) Reset() {
 	*x = JoinGameRoomRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_proto_game_proto_msgTypes[0]
+		mi := &file_pkg_proto_game_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -44,7 +240,7 @@ func (x *JoinGameRoomRequest) String() string {
 func (*JoinGameRoomRequest) ProtoMessage() {}
 
 func (x *JoinGameRoomRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_proto_game_proto_msgTypes[0]
+	mi := &file_pkg_proto_game_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +253,7 @@ func (x *JoinGameRoomRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JoinGameRoomRequest.ProtoReflect.Descriptor instead.
 func (*JoinGameRoomRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_proto_game_proto_rawDescGZIP(), []int{0}
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *JoinGameRoomRequest) GetName() string {
@@ -67,18 +263,359 @@ func (x *JoinGameRoomRequest) GetName() string {
 	return ""
 }
 
+type VoteRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Goal     int32 `protobuf:"varint,1,opt,name=goal,proto3" json:"goal,omitempty"`
+	RoomNumb int32 `protobuf:"varint,2,opt,name=roomNumb,proto3" json:"roomNumb,omitempty"`
+}
+
+func (x *VoteRequest) Reset() {
+	*x = VoteRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VoteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VoteRequest) ProtoMessage() {}
+
+func (x *VoteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VoteRequest.ProtoReflect.Descriptor instead.
+func (*VoteRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *VoteRequest) GetGoal() int32 {
+	if x != nil {
+		return x.Goal
+	}
+	return 0
+}
+
+func (x *VoteRequest) GetRoomNumb() int32 {
+	if x != nil {
+		return x.RoomNumb
+	}
+	return 0
+}
+
+type VoteResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Suc bool `protobuf:"varint,1,opt,name=suc,proto3" json:"suc,omitempty"`
+}
+
+func (x *VoteResp) Reset() {
+	*x = VoteResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VoteResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VoteResp) ProtoMessage() {}
+
+func (x *VoteResp) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VoteResp.ProtoReflect.Descriptor instead.
+func (*VoteResp) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *VoteResp) GetSuc() bool {
+	if x != nil {
+		return x.Suc
+	}
+	return false
+}
+
+type KillPlayerResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Suc bool `protobuf:"varint,1,opt,name=suc,proto3" json:"suc,omitempty"`
+}
+
+func (x *KillPlayerResp) Reset() {
+	*x = KillPlayerResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *KillPlayerResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*KillPlayerResp) ProtoMessage() {}
+
+func (x *KillPlayerResp) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use KillPlayerResp.ProtoReflect.Descriptor instead.
+func (*KillPlayerResp) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *KillPlayerResp) GetSuc() bool {
+	if x != nil {
+		return x.Suc
+	}
+	return false
+}
+
+type KillPlayerRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Goal     int32 `protobuf:"varint,1,opt,name=goal,proto3" json:"goal,omitempty"`
+	PlNumb   int32 `protobuf:"varint,2,opt,name=plNumb,proto3" json:"plNumb,omitempty"`
+	RoomNumb int32 `protobuf:"varint,3,opt,name=roomNumb,proto3" json:"roomNumb,omitempty"`
+}
+
+func (x *KillPlayerRequest) Reset() {
+	*x = KillPlayerRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *KillPlayerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*KillPlayerRequest) ProtoMessage() {}
+
+func (x *KillPlayerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use KillPlayerRequest.ProtoReflect.Descriptor instead.
+func (*KillPlayerRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *KillPlayerRequest) GetGoal() int32 {
+	if x != nil {
+		return x.Goal
+	}
+	return 0
+}
+
+func (x *KillPlayerRequest) GetPlNumb() int32 {
+	if x != nil {
+		return x.PlNumb
+	}
+	return 0
+}
+
+func (x *KillPlayerRequest) GetRoomNumb() int32 {
+	if x != nil {
+		return x.RoomNumb
+	}
+	return 0
+}
+
+type CheckPlayerResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Suc   bool `protobuf:"varint,1,opt,name=suc,proto3" json:"suc,omitempty"`
+	IsMaf bool `protobuf:"varint,2,opt,name=isMaf,proto3" json:"isMaf,omitempty"`
+}
+
+func (x *CheckPlayerResp) Reset() {
+	*x = CheckPlayerResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CheckPlayerResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckPlayerResp) ProtoMessage() {}
+
+func (x *CheckPlayerResp) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckPlayerResp.ProtoReflect.Descriptor instead.
+func (*CheckPlayerResp) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CheckPlayerResp) GetSuc() bool {
+	if x != nil {
+		return x.Suc
+	}
+	return false
+}
+
+func (x *CheckPlayerResp) GetIsMaf() bool {
+	if x != nil {
+		return x.IsMaf
+	}
+	return false
+}
+
+type CheckPlayerRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Goal     int32 `protobuf:"varint,1,opt,name=goal,proto3" json:"goal,omitempty"`
+	PlNumb   int32 `protobuf:"varint,2,opt,name=plNumb,proto3" json:"plNumb,omitempty"`
+	RoomNumb int32 `protobuf:"varint,3,opt,name=roomNumb,proto3" json:"roomNumb,omitempty"`
+}
+
+func (x *CheckPlayerRequest) Reset() {
+	*x = CheckPlayerRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CheckPlayerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckPlayerRequest) ProtoMessage() {}
+
+func (x *CheckPlayerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckPlayerRequest.ProtoReflect.Descriptor instead.
+func (*CheckPlayerRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CheckPlayerRequest) GetGoal() int32 {
+	if x != nil {
+		return x.Goal
+	}
+	return 0
+}
+
+func (x *CheckPlayerRequest) GetPlNumb() int32 {
+	if x != nil {
+		return x.PlNumb
+	}
+	return 0
+}
+
+func (x *CheckPlayerRequest) GetRoomNumb() int32 {
+	if x != nil {
+		return x.RoomNumb
+	}
+	return 0
+}
+
 type GameRoom struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RoomNumb int32 `protobuf:"varint,1,opt,name=roomNumb,proto3" json:"roomNumb,omitempty"`
+	// Types that are assignable to GameState:
+	//	*GameRoom_GameSt
+	//	*GameRoom_Day
+	//	*GameRoom_Night
+	//	*GameRoom_FiNight
+	//	*GameRoom_Votes
+	//	*GameRoom_ComReq
+	//	*GameRoom_Checks
+	//	*GameRoom_Res
+	//	*GameRoom_FiR
+	//	*GameRoom_Fi
+	GameState isGameRoom_GameState `protobuf_oneof:"GameState"`
 }
 
 func (x *GameRoom) Reset() {
 	*x = GameRoom{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_proto_game_proto_msgTypes[1]
+		mi := &file_pkg_proto_game_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -91,7 +628,7 @@ func (x *GameRoom) String() string {
 func (*GameRoom) ProtoMessage() {}
 
 func (x *GameRoom) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_proto_game_proto_msgTypes[1]
+	mi := &file_pkg_proto_game_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -104,12 +641,646 @@ func (x *GameRoom) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameRoom.ProtoReflect.Descriptor instead.
 func (*GameRoom) Descriptor() ([]byte, []int) {
-	return file_pkg_proto_game_proto_rawDescGZIP(), []int{1}
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *GameRoom) GetRoomNumb() int32 {
+func (m *GameRoom) GetGameState() isGameRoom_GameState {
+	if m != nil {
+		return m.GameState
+	}
+	return nil
+}
+
+func (x *GameRoom) GetGameSt() *GameStart {
+	if x, ok := x.GetGameState().(*GameRoom_GameSt); ok {
+		return x.GameSt
+	}
+	return nil
+}
+
+func (x *GameRoom) GetDay() *DayState {
+	if x, ok := x.GetGameState().(*GameRoom_Day); ok {
+		return x.Day
+	}
+	return nil
+}
+
+func (x *GameRoom) GetNight() *NightState {
+	if x, ok := x.GetGameState().(*GameRoom_Night); ok {
+		return x.Night
+	}
+	return nil
+}
+
+func (x *GameRoom) GetFiNight() *FiNightState {
+	if x, ok := x.GetGameState().(*GameRoom_FiNight); ok {
+		return x.FiNight
+	}
+	return nil
+}
+
+func (x *GameRoom) GetVotes() *StartVote {
+	if x, ok := x.GetGameState().(*GameRoom_Votes); ok {
+		return x.Votes
+	}
+	return nil
+}
+
+func (x *GameRoom) GetComReq() *ComisReq {
+	if x, ok := x.GetGameState().(*GameRoom_ComReq); ok {
+		return x.ComReq
+	}
+	return nil
+}
+
+func (x *GameRoom) GetChecks() *ComisChecks {
+	if x, ok := x.GetGameState().(*GameRoom_Checks); ok {
+		return x.Checks
+	}
+	return nil
+}
+
+func (x *GameRoom) GetRes() *ResultOfVotes {
+	if x, ok := x.GetGameState().(*GameRoom_Res); ok {
+		return x.Res
+	}
+	return nil
+}
+
+func (x *GameRoom) GetFiR() *FinishReq {
+	if x, ok := x.GetGameState().(*GameRoom_FiR); ok {
+		return x.FiR
+	}
+	return nil
+}
+
+func (x *GameRoom) GetFi() *FinishGame {
+	if x, ok := x.GetGameState().(*GameRoom_Fi); ok {
+		return x.Fi
+	}
+	return nil
+}
+
+type isGameRoom_GameState interface {
+	isGameRoom_GameState()
+}
+
+type GameRoom_GameSt struct {
+	GameSt *GameStart `protobuf:"bytes,1,opt,name=gameSt,proto3,oneof"`
+}
+
+type GameRoom_Day struct {
+	Day *DayState `protobuf:"bytes,2,opt,name=day,proto3,oneof"`
+}
+
+type GameRoom_Night struct {
+	Night *NightState `protobuf:"bytes,3,opt,name=night,proto3,oneof"`
+}
+
+type GameRoom_FiNight struct {
+	FiNight *FiNightState `protobuf:"bytes,4,opt,name=fiNight,proto3,oneof"`
+}
+
+type GameRoom_Votes struct {
+	Votes *StartVote `protobuf:"bytes,5,opt,name=votes,proto3,oneof"`
+}
+
+type GameRoom_ComReq struct {
+	ComReq *ComisReq `protobuf:"bytes,6,opt,name=comReq,proto3,oneof"`
+}
+
+type GameRoom_Checks struct {
+	Checks *ComisChecks `protobuf:"bytes,7,opt,name=checks,proto3,oneof"`
+}
+
+type GameRoom_Res struct {
+	Res *ResultOfVotes `protobuf:"bytes,8,opt,name=res,proto3,oneof"`
+}
+
+type GameRoom_FiR struct {
+	FiR *FinishReq `protobuf:"bytes,9,opt,name=fiR,proto3,oneof"`
+}
+
+type GameRoom_Fi struct {
+	Fi *FinishGame `protobuf:"bytes,10,opt,name=fi,proto3,oneof"`
+}
+
+func (*GameRoom_GameSt) isGameRoom_GameState() {}
+
+func (*GameRoom_Day) isGameRoom_GameState() {}
+
+func (*GameRoom_Night) isGameRoom_GameState() {}
+
+func (*GameRoom_FiNight) isGameRoom_GameState() {}
+
+func (*GameRoom_Votes) isGameRoom_GameState() {}
+
+func (*GameRoom_ComReq) isGameRoom_GameState() {}
+
+func (*GameRoom_Checks) isGameRoom_GameState() {}
+
+func (*GameRoom_Res) isGameRoom_GameState() {}
+
+func (*GameRoom_FiR) isGameRoom_GameState() {}
+
+func (*GameRoom_Fi) isGameRoom_GameState() {}
+
+type FinishReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *FinishReq) Reset() {
+	*x = FinishReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinishReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinishReq) ProtoMessage() {}
+
+func (x *FinishReq) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinishReq.ProtoReflect.Descriptor instead.
+func (*FinishReq) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{12}
+}
+
+type ResultOfVotes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IsCh bool  `protobuf:"varint,1,opt,name=isCh,proto3" json:"isCh,omitempty"`
+	Pl   int32 `protobuf:"varint,2,opt,name=pl,proto3" json:"pl,omitempty"`
+}
+
+func (x *ResultOfVotes) Reset() {
+	*x = ResultOfVotes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ResultOfVotes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResultOfVotes) ProtoMessage() {}
+
+func (x *ResultOfVotes) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResultOfVotes.ProtoReflect.Descriptor instead.
+func (*ResultOfVotes) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ResultOfVotes) GetIsCh() bool {
+	if x != nil {
+		return x.IsCh
+	}
+	return false
+}
+
+func (x *ResultOfVotes) GetPl() int32 {
+	if x != nil {
+		return x.Pl
+	}
+	return 0
+}
+
+type ComisChecks struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Players      []int32 `protobuf:"varint,1,rep,packed,name=players,proto3" json:"players,omitempty"`
+	PlayersRoles []int32 `protobuf:"varint,2,rep,packed,name=playersRoles,proto3" json:"playersRoles,omitempty"`
+}
+
+func (x *ComisChecks) Reset() {
+	*x = ComisChecks{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ComisChecks) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ComisChecks) ProtoMessage() {}
+
+func (x *ComisChecks) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ComisChecks.ProtoReflect.Descriptor instead.
+func (*ComisChecks) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ComisChecks) GetPlayers() []int32 {
+	if x != nil {
+		return x.Players
+	}
+	return nil
+}
+
+func (x *ComisChecks) GetPlayersRoles() []int32 {
+	if x != nil {
+		return x.PlayersRoles
+	}
+	return nil
+}
+
+type ComisReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ComisReq) Reset() {
+	*x = ComisReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ComisReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ComisReq) ProtoMessage() {}
+
+func (x *ComisReq) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ComisReq.ProtoReflect.Descriptor instead.
+func (*ComisReq) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{15}
+}
+
+type StartVote struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AliveGameMemb []int32 `protobuf:"varint,1,rep,packed,name=aliveGameMemb,proto3" json:"aliveGameMemb,omitempty"`
+}
+
+func (x *StartVote) Reset() {
+	*x = StartVote{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StartVote) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartVote) ProtoMessage() {}
+
+func (x *StartVote) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartVote.ProtoReflect.Descriptor instead.
+func (*StartVote) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *StartVote) GetAliveGameMemb() []int32 {
+	if x != nil {
+		return x.AliveGameMemb
+	}
+	return nil
+}
+
+type FiNightState struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	KilPl int32 `protobuf:"varint,1,opt,name=kilPl,proto3" json:"kilPl,omitempty"`
+}
+
+func (x *FiNightState) Reset() {
+	*x = FiNightState{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FiNightState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FiNightState) ProtoMessage() {}
+
+func (x *FiNightState) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FiNightState.ProtoReflect.Descriptor instead.
+func (*FiNightState) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *FiNightState) GetKilPl() int32 {
+	if x != nil {
+		return x.KilPl
+	}
+	return 0
+}
+
+type NightState struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AliveGameMemb []int32 `protobuf:"varint,1,rep,packed,name=aliveGameMemb,proto3" json:"aliveGameMemb,omitempty"`
+}
+
+func (x *NightState) Reset() {
+	*x = NightState{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *NightState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NightState) ProtoMessage() {}
+
+func (x *NightState) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NightState.ProtoReflect.Descriptor instead.
+func (*NightState) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *NightState) GetAliveGameMemb() []int32 {
+	if x != nil {
+		return x.AliveGameMemb
+	}
+	return nil
+}
+
+type GameStart struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RoomNumb int32    `protobuf:"varint,1,opt,name=roomNumb,proto3" json:"roomNumb,omitempty"`
+	Role     int32    `protobuf:"varint,2,opt,name=role,proto3" json:"role,omitempty"`
+	PlNumb   int32    `protobuf:"varint,3,opt,name=plNumb,proto3" json:"plNumb,omitempty"`
+	GameMemb []string `protobuf:"bytes,4,rep,name=gameMemb,proto3" json:"gameMemb,omitempty"`
+}
+
+func (x *GameStart) Reset() {
+	*x = GameStart{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GameStart) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GameStart) ProtoMessage() {}
+
+func (x *GameStart) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GameStart.ProtoReflect.Descriptor instead.
+func (*GameStart) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GameStart) GetRoomNumb() int32 {
 	if x != nil {
 		return x.RoomNumb
+	}
+	return 0
+}
+
+func (x *GameStart) GetRole() int32 {
+	if x != nil {
+		return x.Role
+	}
+	return 0
+}
+
+func (x *GameStart) GetPlNumb() int32 {
+	if x != nil {
+		return x.PlNumb
+	}
+	return 0
+}
+
+func (x *GameStart) GetGameMemb() []string {
+	if x != nil {
+		return x.GameMemb
+	}
+	return nil
+}
+
+type DayState struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CurDay        int32   `protobuf:"varint,1,opt,name=curDay,proto3" json:"curDay,omitempty"`
+	AliveGameMemb []int32 `protobuf:"varint,3,rep,packed,name=aliveGameMemb,proto3" json:"aliveGameMemb,omitempty"`
+}
+
+func (x *DayState) Reset() {
+	*x = DayState{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DayState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DayState) ProtoMessage() {}
+
+func (x *DayState) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DayState.ProtoReflect.Descriptor instead.
+func (*DayState) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *DayState) GetCurDay() int32 {
+	if x != nil {
+		return x.CurDay
+	}
+	return 0
+}
+
+func (x *DayState) GetAliveGameMemb() []int32 {
+	if x != nil {
+		return x.AliveGameMemb
+	}
+	return nil
+}
+
+type FinishGame struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GameRes int32 `protobuf:"varint,1,opt,name=gameRes,proto3" json:"gameRes,omitempty"`
+}
+
+func (x *FinishGame) Reset() {
+	*x = FinishGame{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_proto_game_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FinishGame) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinishGame) ProtoMessage() {}
+
+func (x *FinishGame) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_game_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinishGame.ProtoReflect.Descriptor instead.
+func (*FinishGame) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_game_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *FinishGame) GetGameRes() int32 {
+	if x != nil {
+		return x.GameRes
 	}
 	return 0
 }
@@ -118,17 +1289,121 @@ var File_pkg_proto_game_proto protoreflect.FileDescriptor
 
 var file_pkg_proto_game_proto_rawDesc = []byte{
 	0x0a, 0x14, 0x70, 0x6b, 0x67, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x61, 0x6d, 0x65,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x29, 0x0a, 0x13, 0x4a, 0x6f, 0x69, 0x6e, 0x47, 0x61,
-	0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a,
-	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
-	0x65, 0x22, 0x26, 0x0a, 0x08, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x12, 0x1a, 0x0a,
-	0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x32, 0x3a, 0x0a, 0x0d, 0x43, 0x6f, 0x6e,
-	0x6e, 0x65, 0x63, 0x74, 0x54, 0x6f, 0x47, 0x61, 0x6d, 0x65, 0x12, 0x29, 0x0a, 0x02, 0x44, 0x6f,
-	0x12, 0x14, 0x2e, 0x4a, 0x6f, 0x69, 0x6e, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x09, 0x2e, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f,
-	0x6d, 0x22, 0x00, 0x30, 0x01, 0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x67, 0x61, 0x6d, 0x65, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x40, 0x0a, 0x06, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x73,
+	0x12, 0x1a, 0x0a, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x12, 0x1a, 0x0a, 0x08,
+	0x70, 0x75, 0x62, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08,
+	0x70, 0x75, 0x62, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x22, 0x1b, 0x0a, 0x07, 0x50, 0x75, 0x62, 0x52,
+	0x65, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08,
+	0x52, 0x03, 0x73, 0x75, 0x63, 0x22, 0x2e, 0x0a, 0x10, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x44,
+	0x61, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x6f, 0x6f,
+	0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x72, 0x6f, 0x6f,
+	0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x22, 0x21, 0x0a, 0x0d, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x44,
+	0x61, 0x79, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63, 0x22, 0x29, 0x0a, 0x13, 0x4a, 0x6f, 0x69, 0x6e,
+	0x47, 0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x22, 0x3d, 0x0a, 0x0b, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x67, 0x6f, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x04, 0x67, 0x6f, 0x61, 0x6c, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75,
+	0x6d, 0x62, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75,
+	0x6d, 0x62, 0x22, 0x1c, 0x0a, 0x08, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x10,
+	0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x03, 0x73, 0x75, 0x63,
+	0x22, 0x22, 0x0a, 0x0e, 0x4b, 0x69, 0x6c, 0x6c, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x52, 0x65,
+	0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x03, 0x73, 0x75, 0x63, 0x22, 0x5b, 0x0a, 0x11, 0x4b, 0x69, 0x6c, 0x6c, 0x50, 0x6c, 0x61, 0x79,
+	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x67, 0x6f, 0x61,
+	0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x67, 0x6f, 0x61, 0x6c, 0x12, 0x16, 0x0a,
+	0x06, 0x70, 0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x70,
+	0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d,
+	0x62, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d,
+	0x62, 0x22, 0x39, 0x0a, 0x0f, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72,
+	0x52, 0x65, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x03, 0x73, 0x75, 0x63, 0x12, 0x14, 0x0a, 0x05, 0x69, 0x73, 0x4d, 0x61, 0x66, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x05, 0x69, 0x73, 0x4d, 0x61, 0x66, 0x22, 0x5c, 0x0a, 0x12,
+	0x43, 0x68, 0x65, 0x63, 0x6b, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x67, 0x6f, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x04, 0x67, 0x6f, 0x61, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x6c, 0x4e, 0x75, 0x6d, 0x62,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x70, 0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x12, 0x1a,
+	0x0a, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x22, 0x80, 0x03, 0x0a, 0x08, 0x47,
+	0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x12, 0x24, 0x0a, 0x06, 0x67, 0x61, 0x6d, 0x65, 0x53,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x47, 0x61, 0x6d, 0x65, 0x53, 0x74,
+	0x61, 0x72, 0x74, 0x48, 0x00, 0x52, 0x06, 0x67, 0x61, 0x6d, 0x65, 0x53, 0x74, 0x12, 0x1d, 0x0a,
+	0x03, 0x64, 0x61, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x44, 0x61, 0x79,
+	0x53, 0x74, 0x61, 0x74, 0x65, 0x48, 0x00, 0x52, 0x03, 0x64, 0x61, 0x79, 0x12, 0x23, 0x0a, 0x05,
+	0x6e, 0x69, 0x67, 0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0b, 0x2e, 0x4e, 0x69,
+	0x67, 0x68, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x48, 0x00, 0x52, 0x05, 0x6e, 0x69, 0x67, 0x68,
+	0x74, 0x12, 0x29, 0x0a, 0x07, 0x66, 0x69, 0x4e, 0x69, 0x67, 0x68, 0x74, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x46, 0x69, 0x4e, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x48, 0x00, 0x52, 0x07, 0x66, 0x69, 0x4e, 0x69, 0x67, 0x68, 0x74, 0x12, 0x22, 0x0a, 0x05,
+	0x76, 0x6f, 0x74, 0x65, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x53, 0x74,
+	0x61, 0x72, 0x74, 0x56, 0x6f, 0x74, 0x65, 0x48, 0x00, 0x52, 0x05, 0x76, 0x6f, 0x74, 0x65, 0x73,
+	0x12, 0x23, 0x0a, 0x06, 0x63, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x09, 0x2e, 0x43, 0x6f, 0x6d, 0x69, 0x73, 0x52, 0x65, 0x71, 0x48, 0x00, 0x52, 0x06, 0x63,
+	0x6f, 0x6d, 0x52, 0x65, 0x71, 0x12, 0x26, 0x0a, 0x06, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x73, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x43, 0x6f, 0x6d, 0x69, 0x73, 0x43, 0x68, 0x65,
+	0x63, 0x6b, 0x73, 0x48, 0x00, 0x52, 0x06, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x73, 0x12, 0x22, 0x0a,
+	0x03, 0x72, 0x65, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x4f, 0x66, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x48, 0x00, 0x52, 0x03, 0x72, 0x65,
+	0x73, 0x12, 0x1e, 0x0a, 0x03, 0x66, 0x69, 0x52, 0x18, 0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0a,
+	0x2e, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x71, 0x48, 0x00, 0x52, 0x03, 0x66, 0x69,
+	0x52, 0x12, 0x1d, 0x0a, 0x02, 0x66, 0x69, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0b, 0x2e,
+	0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x47, 0x61, 0x6d, 0x65, 0x48, 0x00, 0x52, 0x02, 0x66, 0x69,
+	0x42, 0x0b, 0x0a, 0x09, 0x47, 0x61, 0x6d, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x22, 0x0b, 0x0a,
+	0x09, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x71, 0x22, 0x33, 0x0a, 0x0d, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x4f, 0x66, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x69,
+	0x73, 0x43, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x04, 0x69, 0x73, 0x43, 0x68, 0x12,
+	0x0e, 0x0a, 0x02, 0x70, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x70, 0x6c, 0x22,
+	0x4b, 0x0a, 0x0b, 0x43, 0x6f, 0x6d, 0x69, 0x73, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x73, 0x12, 0x18,
+	0x0a, 0x07, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x05, 0x52,
+	0x07, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x70, 0x6c, 0x61, 0x79,
+	0x65, 0x72, 0x73, 0x52, 0x6f, 0x6c, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x05, 0x52, 0x0c,
+	0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x52, 0x6f, 0x6c, 0x65, 0x73, 0x22, 0x0a, 0x0a, 0x08,
+	0x43, 0x6f, 0x6d, 0x69, 0x73, 0x52, 0x65, 0x71, 0x22, 0x31, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x61, 0x6c, 0x69, 0x76, 0x65, 0x47, 0x61,
+	0x6d, 0x65, 0x4d, 0x65, 0x6d, 0x62, 0x18, 0x01, 0x20, 0x03, 0x28, 0x05, 0x52, 0x0d, 0x61, 0x6c,
+	0x69, 0x76, 0x65, 0x47, 0x61, 0x6d, 0x65, 0x4d, 0x65, 0x6d, 0x62, 0x22, 0x24, 0x0a, 0x0c, 0x46,
+	0x69, 0x4e, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6b,
+	0x69, 0x6c, 0x50, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x6b, 0x69, 0x6c, 0x50,
+	0x6c, 0x22, 0x32, 0x0a, 0x0a, 0x4e, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12,
+	0x24, 0x0a, 0x0d, 0x61, 0x6c, 0x69, 0x76, 0x65, 0x47, 0x61, 0x6d, 0x65, 0x4d, 0x65, 0x6d, 0x62,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x05, 0x52, 0x0d, 0x61, 0x6c, 0x69, 0x76, 0x65, 0x47, 0x61, 0x6d,
+	0x65, 0x4d, 0x65, 0x6d, 0x62, 0x22, 0x6f, 0x0a, 0x09, 0x47, 0x61, 0x6d, 0x65, 0x53, 0x74, 0x61,
+	0x72, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x72, 0x6f, 0x6f, 0x6d, 0x4e, 0x75, 0x6d, 0x62, 0x12, 0x12,
+	0x0a, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x72, 0x6f,
+	0x6c, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x70, 0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x12, 0x1a, 0x0a, 0x08, 0x67, 0x61,
+	0x6d, 0x65, 0x4d, 0x65, 0x6d, 0x62, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x67, 0x61,
+	0x6d, 0x65, 0x4d, 0x65, 0x6d, 0x62, 0x22, 0x48, 0x0a, 0x08, 0x44, 0x61, 0x79, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x63, 0x75, 0x72, 0x44, 0x61, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x63, 0x75, 0x72, 0x44, 0x61, 0x79, 0x12, 0x24, 0x0a, 0x0d, 0x61, 0x6c,
+	0x69, 0x76, 0x65, 0x47, 0x61, 0x6d, 0x65, 0x4d, 0x65, 0x6d, 0x62, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x05, 0x52, 0x0d, 0x61, 0x6c, 0x69, 0x76, 0x65, 0x47, 0x61, 0x6d, 0x65, 0x4d, 0x65, 0x6d, 0x62,
+	0x22, 0x26, 0x0a, 0x0a, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x47, 0x61, 0x6d, 0x65, 0x12, 0x18,
+	0x0a, 0x07, 0x67, 0x61, 0x6d, 0x65, 0x52, 0x65, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x07, 0x67, 0x61, 0x6d, 0x65, 0x52, 0x65, 0x73, 0x32, 0xac, 0x02, 0x0a, 0x0d, 0x43, 0x6f, 0x6e,
+	0x6e, 0x65, 0x63, 0x74, 0x54, 0x6f, 0x47, 0x61, 0x6d, 0x65, 0x12, 0x33, 0x0a, 0x0c, 0x4a, 0x6f,
+	0x69, 0x6e, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x12, 0x14, 0x2e, 0x4a, 0x6f, 0x69,
+	0x6e, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x09, 0x2e, 0x47, 0x61, 0x6d, 0x65, 0x52, 0x6f, 0x6f, 0x6d, 0x22, 0x00, 0x30, 0x01, 0x12,
+	0x30, 0x0a, 0x09, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x44, 0x61, 0x79, 0x12, 0x11, 0x2e, 0x46,
+	0x69, 0x6e, 0x69, 0x73, 0x68, 0x44, 0x61, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x0e, 0x2e, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x44, 0x61, 0x79, 0x52, 0x65, 0x73, 0x70, 0x22,
+	0x00, 0x12, 0x33, 0x0a, 0x0a, 0x4b, 0x69, 0x6c, 0x6c, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x12,
+	0x12, 0x2e, 0x4b, 0x69, 0x6c, 0x6c, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x0f, 0x2e, 0x4b, 0x69, 0x6c, 0x6c, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72,
+	0x52, 0x65, 0x73, 0x70, 0x22, 0x00, 0x12, 0x36, 0x0a, 0x0b, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x50,
+	0x6c, 0x61, 0x79, 0x65, 0x72, 0x12, 0x13, 0x2e, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x50, 0x6c, 0x61,
+	0x79, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x10, 0x2e, 0x43, 0x68, 0x65,
+	0x63, 0x6b, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x22, 0x00, 0x12, 0x21,
+	0x0a, 0x04, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x0c, 0x2e, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x09, 0x2e, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22,
+	0x00, 0x12, 0x24, 0x0a, 0x0d, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x43, 0x68, 0x65, 0x63,
+	0x6b, 0x73, 0x12, 0x07, 0x2e, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x73, 0x1a, 0x08, 0x2e, 0x50, 0x75,
+	0x62, 0x52, 0x65, 0x73, 0x70, 0x22, 0x00, 0x42, 0x08, 0x5a, 0x06, 0x2e, 0x2f, 0x67, 0x61, 0x6d,
+	0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -143,19 +1418,59 @@ func file_pkg_proto_game_proto_rawDescGZIP() []byte {
 	return file_pkg_proto_game_proto_rawDescData
 }
 
-var file_pkg_proto_game_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_pkg_proto_game_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_pkg_proto_game_proto_goTypes = []interface{}{
-	(*JoinGameRoomRequest)(nil), // 0: JoinGameRoomRequest
-	(*GameRoom)(nil),            // 1: GameRoom
+	(*Checks)(nil),              // 0: Checks
+	(*PubResp)(nil),             // 1: PubResp
+	(*FinishDayRequest)(nil),    // 2: FinishDayRequest
+	(*FinishDayResp)(nil),       // 3: FinishDayResp
+	(*JoinGameRoomRequest)(nil), // 4: JoinGameRoomRequest
+	(*VoteRequest)(nil),         // 5: VoteRequest
+	(*VoteResp)(nil),            // 6: VoteResp
+	(*KillPlayerResp)(nil),      // 7: KillPlayerResp
+	(*KillPlayerRequest)(nil),   // 8: KillPlayerRequest
+	(*CheckPlayerResp)(nil),     // 9: CheckPlayerResp
+	(*CheckPlayerRequest)(nil),  // 10: CheckPlayerRequest
+	(*GameRoom)(nil),            // 11: GameRoom
+	(*FinishReq)(nil),           // 12: FinishReq
+	(*ResultOfVotes)(nil),       // 13: ResultOfVotes
+	(*ComisChecks)(nil),         // 14: ComisChecks
+	(*ComisReq)(nil),            // 15: ComisReq
+	(*StartVote)(nil),           // 16: StartVote
+	(*FiNightState)(nil),        // 17: FiNightState
+	(*NightState)(nil),          // 18: NightState
+	(*GameStart)(nil),           // 19: GameStart
+	(*DayState)(nil),            // 20: DayState
+	(*FinishGame)(nil),          // 21: FinishGame
 }
 var file_pkg_proto_game_proto_depIdxs = []int32{
-	0, // 0: ConnectToGame.Do:input_type -> JoinGameRoomRequest
-	1, // 1: ConnectToGame.Do:output_type -> GameRoom
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	19, // 0: GameRoom.gameSt:type_name -> GameStart
+	20, // 1: GameRoom.day:type_name -> DayState
+	18, // 2: GameRoom.night:type_name -> NightState
+	17, // 3: GameRoom.fiNight:type_name -> FiNightState
+	16, // 4: GameRoom.votes:type_name -> StartVote
+	15, // 5: GameRoom.comReq:type_name -> ComisReq
+	14, // 6: GameRoom.checks:type_name -> ComisChecks
+	13, // 7: GameRoom.res:type_name -> ResultOfVotes
+	12, // 8: GameRoom.fiR:type_name -> FinishReq
+	21, // 9: GameRoom.fi:type_name -> FinishGame
+	4,  // 10: ConnectToGame.JoinGameRoom:input_type -> JoinGameRoomRequest
+	2,  // 11: ConnectToGame.FinishDay:input_type -> FinishDayRequest
+	8,  // 12: ConnectToGame.KillPlayer:input_type -> KillPlayerRequest
+	10, // 13: ConnectToGame.CheckPlayer:input_type -> CheckPlayerRequest
+	5,  // 14: ConnectToGame.Vote:input_type -> VoteRequest
+	0,  // 15: ConnectToGame.PublishChecks:input_type -> Checks
+	11, // 16: ConnectToGame.JoinGameRoom:output_type -> GameRoom
+	3,  // 17: ConnectToGame.FinishDay:output_type -> FinishDayResp
+	7,  // 18: ConnectToGame.KillPlayer:output_type -> KillPlayerResp
+	9,  // 19: ConnectToGame.CheckPlayer:output_type -> CheckPlayerResp
+	6,  // 20: ConnectToGame.Vote:output_type -> VoteResp
+	1,  // 21: ConnectToGame.PublishChecks:output_type -> PubResp
+	16, // [16:22] is the sub-list for method output_type
+	10, // [10:16] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_pkg_proto_game_proto_init() }
@@ -165,7 +1480,7 @@ func file_pkg_proto_game_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_pkg_proto_game_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*JoinGameRoomRequest); i {
+			switch v := v.(*Checks); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -177,6 +1492,126 @@ func file_pkg_proto_game_proto_init() {
 			}
 		}
 		file_pkg_proto_game_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PubResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinishDayRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinishDayResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*JoinGameRoomRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VoteRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VoteResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*KillPlayerResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*KillPlayerRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CheckPlayerResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CheckPlayerRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GameRoom); i {
 			case 0:
 				return &v.state
@@ -188,6 +1623,138 @@ func file_pkg_proto_game_proto_init() {
 				return nil
 			}
 		}
+		file_pkg_proto_game_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinishReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ResultOfVotes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ComisChecks); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ComisReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StartVote); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FiNightState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*NightState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GameStart); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DayState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_proto_game_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FinishGame); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+	}
+	file_pkg_proto_game_proto_msgTypes[11].OneofWrappers = []interface{}{
+		(*GameRoom_GameSt)(nil),
+		(*GameRoom_Day)(nil),
+		(*GameRoom_Night)(nil),
+		(*GameRoom_FiNight)(nil),
+		(*GameRoom_Votes)(nil),
+		(*GameRoom_ComReq)(nil),
+		(*GameRoom_Checks)(nil),
+		(*GameRoom_Res)(nil),
+		(*GameRoom_FiR)(nil),
+		(*GameRoom_Fi)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -195,7 +1762,7 @@ func file_pkg_proto_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pkg_proto_game_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

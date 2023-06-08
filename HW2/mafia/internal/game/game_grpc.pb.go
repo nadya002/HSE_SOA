@@ -22,7 +22,12 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConnectToGameClient interface {
-	Do(ctx context.Context, in *JoinGameRoomRequest, opts ...grpc.CallOption) (ConnectToGame_DoClient, error)
+	JoinGameRoom(ctx context.Context, in *JoinGameRoomRequest, opts ...grpc.CallOption) (ConnectToGame_JoinGameRoomClient, error)
+	FinishDay(ctx context.Context, in *FinishDayRequest, opts ...grpc.CallOption) (*FinishDayResp, error)
+	KillPlayer(ctx context.Context, in *KillPlayerRequest, opts ...grpc.CallOption) (*KillPlayerResp, error)
+	CheckPlayer(ctx context.Context, in *CheckPlayerRequest, opts ...grpc.CallOption) (*CheckPlayerResp, error)
+	Vote(ctx context.Context, in *VoteRequest, opts ...grpc.CallOption) (*VoteResp, error)
+	PublishChecks(ctx context.Context, in *Checks, opts ...grpc.CallOption) (*PubResp, error)
 }
 
 type connectToGameClient struct {
@@ -33,12 +38,12 @@ func NewConnectToGameClient(cc grpc.ClientConnInterface) ConnectToGameClient {
 	return &connectToGameClient{cc}
 }
 
-func (c *connectToGameClient) Do(ctx context.Context, in *JoinGameRoomRequest, opts ...grpc.CallOption) (ConnectToGame_DoClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ConnectToGame_ServiceDesc.Streams[0], "/ConnectToGame/Do", opts...)
+func (c *connectToGameClient) JoinGameRoom(ctx context.Context, in *JoinGameRoomRequest, opts ...grpc.CallOption) (ConnectToGame_JoinGameRoomClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ConnectToGame_ServiceDesc.Streams[0], "/ConnectToGame/JoinGameRoom", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &connectToGameDoClient{stream}
+	x := &connectToGameJoinGameRoomClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -48,16 +53,16 @@ func (c *connectToGameClient) Do(ctx context.Context, in *JoinGameRoomRequest, o
 	return x, nil
 }
 
-type ConnectToGame_DoClient interface {
+type ConnectToGame_JoinGameRoomClient interface {
 	Recv() (*GameRoom, error)
 	grpc.ClientStream
 }
 
-type connectToGameDoClient struct {
+type connectToGameJoinGameRoomClient struct {
 	grpc.ClientStream
 }
 
-func (x *connectToGameDoClient) Recv() (*GameRoom, error) {
+func (x *connectToGameJoinGameRoomClient) Recv() (*GameRoom, error) {
 	m := new(GameRoom)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -65,11 +70,61 @@ func (x *connectToGameDoClient) Recv() (*GameRoom, error) {
 	return m, nil
 }
 
+func (c *connectToGameClient) FinishDay(ctx context.Context, in *FinishDayRequest, opts ...grpc.CallOption) (*FinishDayResp, error) {
+	out := new(FinishDayResp)
+	err := c.cc.Invoke(ctx, "/ConnectToGame/FinishDay", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *connectToGameClient) KillPlayer(ctx context.Context, in *KillPlayerRequest, opts ...grpc.CallOption) (*KillPlayerResp, error) {
+	out := new(KillPlayerResp)
+	err := c.cc.Invoke(ctx, "/ConnectToGame/KillPlayer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *connectToGameClient) CheckPlayer(ctx context.Context, in *CheckPlayerRequest, opts ...grpc.CallOption) (*CheckPlayerResp, error) {
+	out := new(CheckPlayerResp)
+	err := c.cc.Invoke(ctx, "/ConnectToGame/CheckPlayer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *connectToGameClient) Vote(ctx context.Context, in *VoteRequest, opts ...grpc.CallOption) (*VoteResp, error) {
+	out := new(VoteResp)
+	err := c.cc.Invoke(ctx, "/ConnectToGame/Vote", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *connectToGameClient) PublishChecks(ctx context.Context, in *Checks, opts ...grpc.CallOption) (*PubResp, error) {
+	out := new(PubResp)
+	err := c.cc.Invoke(ctx, "/ConnectToGame/PublishChecks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ConnectToGameServer is the server API for ConnectToGame service.
 // All implementations must embed UnimplementedConnectToGameServer
 // for forward compatibility
 type ConnectToGameServer interface {
-	Do(*JoinGameRoomRequest, ConnectToGame_DoServer) error
+	JoinGameRoom(*JoinGameRoomRequest, ConnectToGame_JoinGameRoomServer) error
+	FinishDay(context.Context, *FinishDayRequest) (*FinishDayResp, error)
+	KillPlayer(context.Context, *KillPlayerRequest) (*KillPlayerResp, error)
+	CheckPlayer(context.Context, *CheckPlayerRequest) (*CheckPlayerResp, error)
+	Vote(context.Context, *VoteRequest) (*VoteResp, error)
+	PublishChecks(context.Context, *Checks) (*PubResp, error)
 	mustEmbedUnimplementedConnectToGameServer()
 }
 
@@ -77,8 +132,23 @@ type ConnectToGameServer interface {
 type UnimplementedConnectToGameServer struct {
 }
 
-func (UnimplementedConnectToGameServer) Do(*JoinGameRoomRequest, ConnectToGame_DoServer) error {
-	return status.Errorf(codes.Unimplemented, "method Do not implemented")
+func (UnimplementedConnectToGameServer) JoinGameRoom(*JoinGameRoomRequest, ConnectToGame_JoinGameRoomServer) error {
+	return status.Errorf(codes.Unimplemented, "method JoinGameRoom not implemented")
+}
+func (UnimplementedConnectToGameServer) FinishDay(context.Context, *FinishDayRequest) (*FinishDayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishDay not implemented")
+}
+func (UnimplementedConnectToGameServer) KillPlayer(context.Context, *KillPlayerRequest) (*KillPlayerResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method KillPlayer not implemented")
+}
+func (UnimplementedConnectToGameServer) CheckPlayer(context.Context, *CheckPlayerRequest) (*CheckPlayerResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckPlayer not implemented")
+}
+func (UnimplementedConnectToGameServer) Vote(context.Context, *VoteRequest) (*VoteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Vote not implemented")
+}
+func (UnimplementedConnectToGameServer) PublishChecks(context.Context, *Checks) (*PubResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PublishChecks not implemented")
 }
 func (UnimplementedConnectToGameServer) mustEmbedUnimplementedConnectToGameServer() {}
 
@@ -93,25 +163,115 @@ func RegisterConnectToGameServer(s grpc.ServiceRegistrar, srv ConnectToGameServe
 	s.RegisterService(&ConnectToGame_ServiceDesc, srv)
 }
 
-func _ConnectToGame_Do_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _ConnectToGame_JoinGameRoom_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(JoinGameRoomRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ConnectToGameServer).Do(m, &connectToGameDoServer{stream})
+	return srv.(ConnectToGameServer).JoinGameRoom(m, &connectToGameJoinGameRoomServer{stream})
 }
 
-type ConnectToGame_DoServer interface {
+type ConnectToGame_JoinGameRoomServer interface {
 	Send(*GameRoom) error
 	grpc.ServerStream
 }
 
-type connectToGameDoServer struct {
+type connectToGameJoinGameRoomServer struct {
 	grpc.ServerStream
 }
 
-func (x *connectToGameDoServer) Send(m *GameRoom) error {
+func (x *connectToGameJoinGameRoomServer) Send(m *GameRoom) error {
 	return x.ServerStream.SendMsg(m)
+}
+
+func _ConnectToGame_FinishDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishDayRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectToGameServer).FinishDay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ConnectToGame/FinishDay",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectToGameServer).FinishDay(ctx, req.(*FinishDayRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConnectToGame_KillPlayer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KillPlayerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectToGameServer).KillPlayer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ConnectToGame/KillPlayer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectToGameServer).KillPlayer(ctx, req.(*KillPlayerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConnectToGame_CheckPlayer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckPlayerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectToGameServer).CheckPlayer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ConnectToGame/CheckPlayer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectToGameServer).CheckPlayer(ctx, req.(*CheckPlayerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConnectToGame_Vote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VoteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectToGameServer).Vote(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ConnectToGame/Vote",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectToGameServer).Vote(ctx, req.(*VoteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConnectToGame_PublishChecks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Checks)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectToGameServer).PublishChecks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ConnectToGame/PublishChecks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectToGameServer).PublishChecks(ctx, req.(*Checks))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 // ConnectToGame_ServiceDesc is the grpc.ServiceDesc for ConnectToGame service.
@@ -120,11 +280,32 @@ func (x *connectToGameDoServer) Send(m *GameRoom) error {
 var ConnectToGame_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "ConnectToGame",
 	HandlerType: (*ConnectToGameServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "FinishDay",
+			Handler:    _ConnectToGame_FinishDay_Handler,
+		},
+		{
+			MethodName: "KillPlayer",
+			Handler:    _ConnectToGame_KillPlayer_Handler,
+		},
+		{
+			MethodName: "CheckPlayer",
+			Handler:    _ConnectToGame_CheckPlayer_Handler,
+		},
+		{
+			MethodName: "Vote",
+			Handler:    _ConnectToGame_Vote_Handler,
+		},
+		{
+			MethodName: "PublishChecks",
+			Handler:    _ConnectToGame_PublishChecks_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Do",
-			Handler:       _ConnectToGame_Do_Handler,
+			StreamName:    "JoinGameRoom",
+			Handler:       _ConnectToGame_JoinGameRoom_Handler,
 			ServerStreams: true,
 		},
 	},

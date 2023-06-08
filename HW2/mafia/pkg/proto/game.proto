@@ -5,13 +5,120 @@ syntax = "proto3";
 option go_package = "./game";
 
 service ConnectToGame {
-    rpc Do(JoinGameRoomRequest) returns (stream GameRoom) {}
+    rpc JoinGameRoom(JoinGameRoomRequest) returns (stream GameRoom) {}
+    rpc FinishDay(FinishDayRequest) returns (FinishDayResp) {}
+    rpc KillPlayer(KillPlayerRequest) returns (KillPlayerResp) {}
+    rpc CheckPlayer(CheckPlayerRequest) returns (CheckPlayerResp) {}
+    rpc Vote(VoteRequest) returns (VoteResp) {}
+    rpc PublishChecks(Checks) returns (PubResp) {}
+}
+message Checks {
+    int32 roomNumb = 1;
+    bool pubCheck = 2;
+}
+
+message PubResp {
+    bool suc = 1;
+}
+
+message FinishDayRequest {
+    int32 roomNumb = 1;
+}
+
+message FinishDayResp {
+    bool suc = 1;
 }
 
 message JoinGameRoomRequest {
     string name = 1;
 }
 
+message VoteRequest {
+    int32 goal = 1;
+    int32 roomNumb = 2;
+}
+
+message VoteResp {
+    bool suc = 1;
+}
+
+message KillPlayerResp {
+    bool suc = 1;
+}
+
+message KillPlayerRequest {
+    int32 goal = 1;
+    int32 plNumb = 2;
+    int32 roomNumb = 3;
+}
+
+message CheckPlayerResp {
+    bool suc = 1;
+    bool isMaf = 2;
+}
+
+message CheckPlayerRequest {
+    int32 goal = 1;
+    int32 plNumb = 2;
+    int32 roomNumb = 3;
+}
+
 message GameRoom {
+    oneof GameState {
+        GameStart gameSt = 1;
+        DayState day = 2;
+        NightState night = 3;
+        FiNightState fiNight= 4;
+        StartVote votes = 5;
+        ComisReq comReq = 6;
+        ComisChecks checks = 7;
+        ResultOfVotes res = 8;
+        FinishReq fiR = 9;
+        FinishGame fi = 10;
+    }
+}
+
+message FinishReq {
+    
+}
+
+message ResultOfVotes {
+    bool isCh = 1;
+    int32 pl = 2;
+}
+
+message ComisChecks {
+    repeated int32 players = 1;
+    repeated int32 playersRoles = 2;
+}
+
+message ComisReq {
+
+}
+
+message StartVote {
+    repeated int32 aliveGameMemb = 1;
+}
+
+message FiNightState {
+    int32 kilPl = 1;
+}
+message NightState {
+    repeated int32 aliveGameMemb = 1;
+}
+
+message GameStart {
     int32 roomNumb = 1;
+    int32 role = 2;
+    int32 plNumb = 3;
+    repeated string gameMemb = 4;
+}
+
+message DayState {
+    int32 curDay = 1;
+    repeated int32 aliveGameMemb = 3;
+}
+
+message FinishGame {
+    int32 gameRes = 1;
 }
