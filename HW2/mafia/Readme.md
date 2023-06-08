@@ -21,9 +21,9 @@
 Запускать возможно при помощи докер контейнеров. Сначала надо собрать все контейнеры.
 
 ```bash
-$ docker build . --tag server -f docker/server.dockerfile 
-$ dockebuild . --tag client -f docker/client.dockerfile 
-$ dockebuild . --tag client_bot -f docker/clientBot.dockerfile 
+docker build . --tag server -f docker/server.dockerfile 
+docker build . --tag client -f docker/client.dockerfile 
+docker build . --tag client_bot -f docker/clientBot.dockerfile 
 ```
 Далее можно запускать проект, для начала надо стартануть сервер, параметром можно указать кол-во игроков в одной комнате, рекомендованно указать 5 игроков.
 
