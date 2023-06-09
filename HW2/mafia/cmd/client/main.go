@@ -16,6 +16,16 @@ import (
 )
 
 func main() {
+	colorReset := "\033[0m"
+
+	colorRed := "\033[31m"
+	colorGreen := "\033[32m"
+	colorYellow := "\033[33m"
+	// colorBlue := "\033[34m"
+	colorPurple := "\033[35m"
+	colorCyan := "\033[36m"
+	// colorWhite := "\033[37m"
+
 	names := []string{"Mary", "Bob", "Tim", "Lola", "Kate", "Sara",
 		"John", "Bill", "Lily", "Dima", "Rick", "Morty", "Paul", "Derek",
 		"Ira", "Leo", "Vini", "Ney", "Cris", "Olya", "Darya", "Mark", "Mayk", "Peter"}
@@ -75,15 +85,15 @@ func main() {
 			role = int(resp.GetGameSt().Role)
 			plNumb = int(resp.GetGameSt().GetPlNumb())
 			cntPl = int(len(resp.GetGameSt().GetGameMemb()))
-			fmt.Println("Game Start, your room numb is", roomNumb)
+			fmt.Println(string(colorPurple), "Game Start, your room numb is", roomNumb, string(colorReset))
 			for i, memb := range resp.GetGameSt().GameMemb {
 				fmt.Println("The name of", i+1, "player is", memb)
 			}
 			fmt.Println("Your number is", resp.GetGameSt().PlNumb+1)
-			fmt.Println("Your role is", roles[resp.GetGameSt().Role])
+			fmt.Println(string(colorYellow), "Your role is", roles[resp.GetGameSt().Role], string(colorReset))
 		}
 		if resp.GetDay() != nil {
-			fmt.Println("Day starts")
+			fmt.Println(string(colorYellow), "Day starts", string(colorReset))
 			if resp.GetDay().CurDay == 0 {
 				fmt.Println("This is the first day, so you can't kill anyone")
 			}
@@ -123,7 +133,7 @@ func main() {
 		}
 
 		if resp.GetChecks() != nil {
-			fmt.Println("Comissar published his checks")
+			fmt.Println(string(colorPurple), "Comissar published his checks", string(colorReset))
 			for i, v := range resp.GetChecks().Players {
 				fmt.Println("The role of", v+1, "player is", roles[resp.GetChecks().PlayersRoles[i]])
 			}
@@ -147,7 +157,7 @@ func main() {
 			}
 			suc, _ := client.Vote(context.Background(), &req)
 			for !suc.Suc {
-				fmt.Println("You cannot vote for this player")
+				fmt.Println(string(colorRed), "You cannot vote for this player", string(colorReset))
 				fmt.Println("Choose one of these players", resp.GetVotes().AliveGameMemb)
 				var numb int32
 				fmt.Scanf("%d\n", &numb)
@@ -164,7 +174,7 @@ func main() {
 			if resp.GetRes().IsCh {
 				if resp.GetRes().Pl == int32(plNumb) {
 					alive = false
-					fmt.Println("You are killed, watch the game")
+					fmt.Println(string(colorRed), "You are killed, watch the game", string(colorReset))
 				} else {
 					fmt.Println("The city decided to kill player number", resp.GetRes().Pl+1)
 				}
@@ -174,7 +184,7 @@ func main() {
 		}
 
 		if resp.GetNight() != nil {
-			fmt.Println("Night starts")
+			fmt.Println(string(colorCyan), "Night starts", string(colorReset))
 			if role == 1 {
 				fmt.Println("Your role is mafia, so choose the number of the player you want to kill")
 				fmt.Println("Live player numbers are", resp.GetNight().AliveGameMemb)
@@ -192,7 +202,7 @@ func main() {
 				}
 				suc, _ := client.KillPlayer(context.Background(), &req)
 				for !suc.Suc {
-					fmt.Println("You can't kill this player, please choose someone from the live players")
+					fmt.Println(string(colorRed), "You can't kill this player, please choose someone from the live players", string(colorReset))
 					fmt.Println("Live player numbers are", resp.GetNight().AliveGameMemb)
 
 					fmt.Scanf("%d\n", &numb)
@@ -215,7 +225,7 @@ func main() {
 				}
 				suc, _ := client.CheckPlayer(context.Background(), &req)
 				for !suc.Suc {
-					fmt.Println("You can't check this player, please choose the number from 1 to", cntPl)
+					fmt.Println(string(colorRed), "You can't check this player, please choose the number from 1 to", cntPl, string(colorReset))
 
 					fmt.Scanf("%d\n", &numb)
 					req.Goal = numb - 1
@@ -235,25 +245,27 @@ func main() {
 		if resp.GetFiNight() != nil {
 			if resp.GetFiNight().KilPl == int32(plNumb) {
 				alive = false
-				fmt.Println("You are killed, watch the game")
+				fmt.Println(string(colorRed), "You are killed, watch the game", string(colorReset))
 			} else {
 				fmt.Println("The night is over, player number was killed that night is", resp.GetFiNight().KilPl+1)
 			}
 		}
 
 		if resp.GetFi() != nil {
-			fmt.Println("Game finished")
+			fmt.Println(string(colorYellow), "Game finished", string(colorReset))
 			if resp.GetFi().GameRes == 1 {
+				fmt.Println("Mafia win")
 				if role == 1 {
-					fmt.Println("You win")
+					fmt.Println(string(colorGreen), "You win", string(colorReset))
 				} else {
-					fmt.Println("You lose")
+					fmt.Println(string(colorRed), "You lose", string(colorReset))
 				}
 			} else if resp.GetFi().GameRes == 2 {
+				fmt.Println("City win")
 				if role == 1 {
-					fmt.Println("You lose")
+					fmt.Println(string(colorRed), "You lose", string(colorReset))
 				} else {
-					fmt.Println("You win")
+					fmt.Println(string(colorGreen), "You win", string(colorReset))
 				}
 			} else {
 				fmt.Println("Someone left")

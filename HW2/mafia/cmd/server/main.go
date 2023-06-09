@@ -383,7 +383,10 @@ func (r *RoomManager) reqToFinishDay() {
 	if r.igGameFinish {
 		return
 	}
+	r.mutex.Lock()
 	r.cntVotesToFi += 1
+	r.mutex.Unlock()
+
 	if r.cntVotesToFi == int32(len(r.memb)) {
 		r.FinishDay()
 	}
