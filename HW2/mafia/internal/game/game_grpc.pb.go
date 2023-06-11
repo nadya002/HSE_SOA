@@ -23,11 +23,14 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConnectToGameClient interface {
 	JoinGameRoom(ctx context.Context, in *JoinGameRoomRequest, opts ...grpc.CallOption) (ConnectToGame_JoinGameRoomClient, error)
+	GetChatStream(ctx context.Context, in *ChatStreamRequest, opts ...grpc.CallOption) (ConnectToGame_GetChatStreamClient, error)
 	FinishDay(ctx context.Context, in *FinishDayRequest, opts ...grpc.CallOption) (*FinishDayResp, error)
 	KillPlayer(ctx context.Context, in *KillPlayerRequest, opts ...grpc.CallOption) (*KillPlayerResp, error)
 	CheckPlayer(ctx context.Context, in *CheckPlayerRequest, opts ...grpc.CallOption) (*CheckPlayerResp, error)
 	Vote(ctx context.Context, in *VoteRequest, opts ...grpc.CallOption) (*VoteResp, error)
 	PublishChecks(ctx context.Context, in *Checks, opts ...grpc.CallOption) (*PubResp, error)
+	FinishChat(ctx context.Context, in *FinishChatRequest, opts ...grpc.CallOption) (*FinishChatResp, error)
+	SendMessage(ctx context.Context, in *ChatMes, opts ...grpc.CallOption) (*ChatMesResp, error)
 }
 
 type connectToGameClient struct {
@@ -64,6 +67,38 @@ type connectToGameJoinGameRoomClient struct {
 
 func (x *connectToGameJoinGameRoomClient) Recv() (*GameRoom, error) {
 	m := new(GameRoom)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *connectToGameClient) GetChatStream(ctx context.Context, in *ChatStreamRequest, opts ...grpc.CallOption) (ConnectToGame_GetChatStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ConnectToGame_ServiceDesc.Streams[1], "/ConnectToGame/GetChatStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &connectToGameGetChatStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type ConnectToGame_GetChatStreamClient interface {
+	Recv() (*ChatStream, error)
+	grpc.ClientStream
+}
+
+type connectToGameGetChatStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *connectToGameGetChatStreamClient) Recv() (*ChatStream, error) {
+	m := new(ChatStream)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -115,16 +150,37 @@ func (c *connectToGameClient) PublishChecks(ctx context.Context, in *Checks, opt
 	return out, nil
 }
 
+func (c *connectToGameClient) FinishChat(ctx context.Context, in *FinishChatRequest, opts ...grpc.CallOption) (*FinishChatResp, error) {
+	out := new(FinishChatResp)
+	err := c.cc.Invoke(ctx, "/ConnectToGame/FinishChat", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *connectToGameClient) SendMessage(ctx context.Context, in *ChatMes, opts ...grpc.CallOption) (*ChatMesResp, error) {
+	out := new(ChatMesResp)
+	err := c.cc.Invoke(ctx, "/ConnectToGame/SendMessage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ConnectToGameServer is the server API for ConnectToGame service.
 // All implementations must embed UnimplementedConnectToGameServer
 // for forward compatibility
 type ConnectToGameServer interface {
 	JoinGameRoom(*JoinGameRoomRequest, ConnectToGame_JoinGameRoomServer) error
+	GetChatStream(*ChatStreamRequest, ConnectToGame_GetChatStreamServer) error
 	FinishDay(context.Context, *FinishDayRequest) (*FinishDayResp, error)
 	KillPlayer(context.Context, *KillPlayerRequest) (*KillPlayerResp, error)
 	CheckPlayer(context.Context, *CheckPlayerRequest) (*CheckPlayerResp, error)
 	Vote(context.Context, *VoteRequest) (*VoteResp, error)
 	PublishChecks(context.Context, *Checks) (*PubResp, error)
+	FinishChat(context.Context, *FinishChatRequest) (*FinishChatResp, error)
+	SendMessage(context.Context, *ChatMes) (*ChatMesResp, error)
 	mustEmbedUnimplementedConnectToGameServer()
 }
 
@@ -134,6 +190,9 @@ type UnimplementedConnectToGameServer struct {
 
 func (UnimplementedConnectToGameServer) JoinGameRoom(*JoinGameRoomRequest, ConnectToGame_JoinGameRoomServer) error {
 	return status.Errorf(codes.Unimplemented, "method JoinGameRoom not implemented")
+}
+func (UnimplementedConnectToGameServer) GetChatStream(*ChatStreamRequest, ConnectToGame_GetChatStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method GetChatStream not implemented")
 }
 func (UnimplementedConnectToGameServer) FinishDay(context.Context, *FinishDayRequest) (*FinishDayResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FinishDay not implemented")
@@ -149,6 +208,12 @@ func (UnimplementedConnectToGameServer) Vote(context.Context, *VoteRequest) (*Vo
 }
 func (UnimplementedConnectToGameServer) PublishChecks(context.Context, *Checks) (*PubResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishChecks not implemented")
+}
+func (UnimplementedConnectToGameServer) FinishChat(context.Context, *FinishChatRequest) (*FinishChatResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishChat not implemented")
+}
+func (UnimplementedConnectToGameServer) SendMessage(context.Context, *ChatMes) (*ChatMesResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
 func (UnimplementedConnectToGameServer) mustEmbedUnimplementedConnectToGameServer() {}
 
@@ -181,6 +246,27 @@ type connectToGameJoinGameRoomServer struct {
 }
 
 func (x *connectToGameJoinGameRoomServer) Send(m *GameRoom) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ConnectToGame_GetChatStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ChatStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ConnectToGameServer).GetChatStream(m, &connectToGameGetChatStreamServer{stream})
+}
+
+type ConnectToGame_GetChatStreamServer interface {
+	Send(*ChatStream) error
+	grpc.ServerStream
+}
+
+type connectToGameGetChatStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *connectToGameGetChatStreamServer) Send(m *ChatStream) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -274,6 +360,42 @@ func _ConnectToGame_PublishChecks_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ConnectToGame_FinishChat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishChatRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectToGameServer).FinishChat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ConnectToGame/FinishChat",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectToGameServer).FinishChat(ctx, req.(*FinishChatRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConnectToGame_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChatMes)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectToGameServer).SendMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ConnectToGame/SendMessage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectToGameServer).SendMessage(ctx, req.(*ChatMes))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ConnectToGame_ServiceDesc is the grpc.ServiceDesc for ConnectToGame service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -301,11 +423,24 @@ var ConnectToGame_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "PublishChecks",
 			Handler:    _ConnectToGame_PublishChecks_Handler,
 		},
+		{
+			MethodName: "FinishChat",
+			Handler:    _ConnectToGame_FinishChat_Handler,
+		},
+		{
+			MethodName: "SendMessage",
+			Handler:    _ConnectToGame_SendMessage_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "JoinGameRoom",
 			Handler:       _ConnectToGame_JoinGameRoom_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "GetChatStream",
+			Handler:       _ConnectToGame_GetChatStream_Handler,
 			ServerStreams: true,
 		},
 	},

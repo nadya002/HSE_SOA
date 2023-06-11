@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+    rabbitmq:
+        image: rabbitmq:3-management
+        hostname: "rabbitmq"
+        
+        # ports:
+        #     - "5672:5672"
+            #- "5672:5672"
+    server:
+        build:
+          context: .
+          dockerfile: docker/server.dockerfile
+
+          args:
+            numbOfPl: "4"
+            
+        environment:
+          SERVER_HOST: "rabbitmq"
+          SERVER_PORT: "5672"
+        #ARG: "value"
+        ports:
+          - "50005:50005"
+        depends_on:
+          - rabbitmq
+    

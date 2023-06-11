@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"mafia/internal/game"
@@ -12,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	amqp "github.com/rabbitmq/amqp091-go"
 	"google.golang.org/grpc"
 )
 
@@ -45,13 +47,15 @@ type GamesManager struct {
 	cuRoom int32
 	rooms  map[int32]*RoomManager
 	mutex  sync.Mutex
+	ch     *amqp.Channel
 }
 
 type Player struct {
-	sub   *Subscription
-	name  string
-	alive bool
-	role  int32
+	sub    *Subscription
+	chatCh chan []byte
+	name   string
+	alive  bool
+	role   int32
 }
 
 type RoomManager struct {
@@ -59,18 +63,21 @@ type RoomManager struct {
 	top    *Topic
 	mutex  sync.Mutex
 	cuRoom int32
+	ch     *amqp.Channel
+	qu     *amqp.Queue
 	//isDay        bool
-	cuDay        int32
-	cntVotesToFi int32
-	isKil        bool
-	isCheck      bool
-	cuKilPl      int32
-	checks       []int32
-	checksRoles  []int32
-	votes        [10]int32
-	cntVotes     int32
-	numbLivPl    int32
-	igGameFinish bool
+	cuDay              int32
+	cntVotesToFi       int32
+	isKil              bool
+	isCheck            bool
+	cuKilPl            int32
+	checks             []int32
+	checksRoles        []int32
+	votes              [10]int32
+	cntVotes           int32
+	numbLivPl          int32
+	igGameFinish       bool
+	numbPlToFinishChat int32
 }
 
 func (r *RoomManager) FinishGame() {
@@ -174,11 +181,12 @@ func (g *GamesManager) Add(name_ string) (*RoomManager, *Subscription, int32, in
 	if g.cuWait == 1 {
 		g.cuRoom += 1
 		g.rooms[g.cuRoom] = &RoomManager{cuRoom: g.cuRoom, top: &Topic{}}
+		g.rooms[g.cuRoom].ch = g.ch
 	}
 	sub_, _ := g.rooms[g.cuRoom].top.Subscribe()
 	cu := len(g.rooms[g.cuRoom].memb)
 	cuR := g.cuRoom
-	g.rooms[g.cuRoom].memb = append(g.rooms[g.cuRoom].memb, Player{sub: sub_, name: name_})
+	g.rooms[g.cuRoom].memb = append(g.rooms[g.cuRoom].memb, Player{sub: sub_, name: name_, chatCh: make(chan []byte)})
 	//res := &g.rooms[g.cuRoom]
 	g.mutex.Unlock()
 	return g.rooms[g.cuRoom], sub_, int32(cu), int32(cuR)
@@ -216,6 +224,20 @@ func (r *RoomManager) start_game() {
 
 	//g := GameManager{}
 	fmt.Println("game func start")
+	q, err := r.ch.QueueDeclare(
+		string(r.cuRoom), // name
+		false,            // durable
+		true,             // delete when unused
+		false,            // exclusive
+		false,            // no-wait
+		nil,              // arguments
+	)
+	if err != nil {
+		log.Fatalf("failed to declare a queue. Error: %s", err)
+	}
+	r.qu = &q
+
+	go r.sendMessageToClient()
 	//rand.Shuffle(roles)
 	rand.Shuffle(len(roles),
 		func(i, j int) { roles[i], roles[j] = roles[j], roles[i] })
@@ -278,7 +300,45 @@ func (r *RoomManager) dayStart() {
 	if r.cuDay != 1 {
 		r.askComis()
 	} else {
-		r.ascUsToFinish()
+		r.startChat()
+		//r.ascUsToFinish()
+	}
+}
+
+func (r *RoomManager) startChat() {
+	r.numbPlToFinishChat = 0
+	g_st := &game.StartChat{}
+
+	resp := &game.GameRoom{
+		GameState: &game.GameRoom_Chat{
+			Chat: g_st,
+		},
+	}
+	r.PublishToAlive(resp)
+}
+
+func (r *RoomManager) reqToFinishChat() bool {
+	r.mutex.Lock()
+	if r.numbPlToFinishChat >= r.numbLivPl {
+		r.mutex.Unlock()
+		return false
+	}
+	r.numbPlToFinishChat += 1
+	fmt.Println(r.numbPlToFinishChat, r.numbLivPl)
+	if r.numbPlToFinishChat == r.numbLivPl {
+		go r.FinishChat()
+	}
+	r.mutex.Unlock()
+	return true
+
+}
+
+func (r *RoomManager) FinishChat() {
+	fmt.Println("finishChat")
+	if r.cuDay == 1 {
+		r.askUsToFinish()
+	} else {
+		r.AskStartVote()
 	}
 }
 
@@ -299,7 +359,7 @@ func (r *RoomManager) askComis() {
 			if r.memb[i].alive {
 				r.memb[i].sub.send(resp)
 			} else {
-				r.AskStartVote()
+				r.startChat()
 			}
 		}
 	}
@@ -323,10 +383,11 @@ func (r *RoomManager) publishCheck(fl bool) {
 		}
 		r.top.Publish(resp)
 	}
-	r.AskStartVote()
+	r.startChat()
 }
 
 func (r *RoomManager) AskStartVote() {
+	fmt.Println("ask to start vote")
 	if r.igGameFinish {
 		return
 	}
@@ -462,13 +523,80 @@ func (r *RoomManager) fiNight() {
 	}
 }
 
-func (r *RoomManager) ascUsToFinish() {
+func (r *RoomManager) askUsToFinish() {
+	fmt.Println("Ask User to finish")
 	resp := &game.GameRoom{
 		GameState: &game.GameRoom_FiR{
 			FiR: &game.FinishReq{},
 		},
 	}
 	r.top.Publish(resp)
+}
+
+type messageFromPl struct {
+	Mes    string
+	PlNumb int32
+}
+
+func enc(st messageFromPl) []byte {
+	b, _ := json.Marshal(st)
+	return b
+}
+
+func dec(by []byte) messageFromPl {
+	var st messageFromPl
+	json.Unmarshal(by, &st)
+	return st
+}
+
+func (r *RoomManager) sendMessage(mes string, plNumb int32) bool {
+	r.mutex.Lock()
+	fmt.Println("start publish")
+	mesWithPl := messageFromPl{
+		Mes:    mes,
+		PlNumb: plNumb,
+	}
+
+	err := r.ch.PublishWithContext(context.Background(),
+		"",        // exchange
+		r.qu.Name, // routing key
+		false,     // mandatory
+		false,     // immediate
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        enc(mesWithPl),
+		})
+	if err != nil {
+		fmt.Println("Get error")
+		fmt.Println(err)
+	}
+	//r.qu
+	r.mutex.Unlock()
+	return true
+
+}
+
+func (r *RoomManager) sendMessageToClient() {
+	messages, err := r.ch.Consume(
+		r.qu.Name, // queue
+		"",        // consumer
+		true,      // auto-ack
+		false,     // exclusive
+		false,     // no-local
+		false,     // no-wait
+		nil,       // args
+	)
+	if err != nil {
+		log.Fatalf("failed to register a consumer. Error: %s", err)
+	}
+
+	for message := range messages {
+		for _, mem := range r.memb {
+			mem.chatCh <- message.Body
+		}
+		//log.Printf("received a message: %s", message.Body)
+	}
+
 }
 
 func (r *RoomManager) vote(pl int32) bool {
@@ -513,7 +641,7 @@ func (r *RoomManager) vote(pl int32) bool {
 			}
 			r.top.Publish(resp)
 			if !r.CheckGameFinish() {
-				r.ascUsToFinish()
+				r.askUsToFinish()
 			}
 		}
 		r.mutex.Unlock()
@@ -524,7 +652,33 @@ func (r *RoomManager) vote(pl int32) bool {
 }
 
 func main() {
-	//fmt.Println(os.Args)
+	fmt.Println(os.Args)
+
+	serverAddr := os.Getenv("SERVER_HOST")
+	port := os.Getenv("SERVER_PORT")
+	listenAddr := fmt.Sprintf("amqp://guest:guest@%s:%s/", serverAddr, port)
+
+	fmt.Println(listenAddr)
+
+	conn, err := amqp.Dial(listenAddr) // Создаем подключение к RabbitMQ
+	for err != nil {
+		conn, err = amqp.Dial(listenAddr)
+		//log.Fatalf("unable to open connect to RabbitMQ server. Error: %s", err)
+	}
+
+	defer func() {
+		_ = conn.Close() // Закрываем подключение в случае удачной попытки
+	}()
+
+	ch, err := conn.Channel()
+	if err != nil {
+		log.Fatalf("failed to open channel. Error: %s", err)
+	}
+
+	defer func() {
+		_ = ch.Close() // Закрываем канал в случае удачной попытки открытия
+	}()
+
 	maxPl, _ = strconv.Atoi(os.Args[1])
 	rand.Seed(time.Now().UnixNano())
 
@@ -543,7 +697,7 @@ func main() {
 
 	// create grpc server
 	s := grpc.NewServer()
-	game.RegisterConnectToGameServer(s, &server{manag: GamesManager{rooms: make(map[int32]*RoomManager)}})
+	game.RegisterConnectToGameServer(s, &server{manag: GamesManager{rooms: make(map[int32]*RoomManager), ch: ch}})
 
 	log.Println("start server")
 	// and start...
@@ -600,6 +754,25 @@ func (s *server) JoinGameRoom(req *game.JoinGameRoomRequest, stream game.Connect
 	//return nil
 }
 
+func (s *server) GetChatStream(req *game.ChatStreamRequest, stream game.ConnectToGame_GetChatStreamServer) error {
+
+	for {
+		select {
+		case str := <-s.manag.rooms[req.RoomNumb].memb[req.PlNumb].chatCh:
+			res := dec(str)
+			resp := game.ChatStream{
+				Mes:    res.Mes,
+				PlNumb: res.PlNumb,
+			}
+			stream.Send(&resp)
+		case <-stream.Context().Done():
+			return nil
+			//str := <-s.manag[req.RoomNumb].memb[req.PlNumb].
+		}
+	}
+	return nil
+}
+
 func (s *server) FinishDay(c context.Context, request *game.FinishDayRequest) (*game.FinishDayResp, error) {
 	s.manag.rooms[request.RoomNumb].reqToFinishDay()
 	resp := game.FinishDayResp{
@@ -636,6 +809,23 @@ func (s *server) PublishChecks(c context.Context, request *game.Checks) (*game.P
 func (s *server) Vote(c context.Context, request *game.VoteRequest) (*game.VoteResp, error) {
 	suc := s.manag.rooms[request.RoomNumb].vote(request.Goal)
 	resp := game.VoteResp{
+		Suc: suc,
+	}
+	return &resp, nil
+}
+
+func (s *server) FinishChat(c context.Context, request *game.FinishChatRequest) (*game.FinishChatResp, error) {
+	suc := s.manag.rooms[request.RoomNumb].reqToFinishChat()
+	resp := game.FinishChatResp{
+		Suc: suc,
+	}
+	return &resp, nil
+}
+
+func (s *server) SendMessage(c context.Context, request *game.ChatMes) (*game.ChatMesResp, error) {
+	fmt.Println("want to send Mes")
+	suc := s.manag.rooms[request.RoomNumb].sendMessage("Player "+strconv.Itoa(int(request.PlNumb))+" said: "+request.Mes, request.PlNumb)
+	resp := game.ChatMesResp{
 		Suc: suc,
 	}
 	return &resp, nil

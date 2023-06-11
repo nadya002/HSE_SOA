@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"io"
@@ -14,6 +15,21 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 )
+
+func recieveChatMes(roomNumb int32, plNumb int32, client game.ConnectToGameClient) {
+	colorReset := "\033[0m"
+	colors := []string{"\033[32m", "\033[33m", "\033[34m", "\033[35m", "\033[36m", "\033[37m"}
+	req := game.ChatStreamRequest{
+		RoomNumb: int32(roomNumb),
+		PlNumb:   int32(plNumb),
+	}
+	streamChat, _ := client.GetChatStream(context.Background(), &req)
+	for {
+		recv, _ := streamChat.Recv()
+		//fmt.Println(recv.Mes)
+		fmt.Println(string(colors[int(recv.PlNumb)%len(colors)]), recv.Mes, string(colorReset))
+	}
+}
 
 func main() {
 	colorReset := "\033[0m"
@@ -91,6 +107,8 @@ func main() {
 			}
 			fmt.Println("Your number is", resp.GetGameSt().PlNumb+1)
 			fmt.Println(string(colorYellow), "Your role is", roles[resp.GetGameSt().Role], string(colorReset))
+			go recieveChatMes(int32(roomNumb), int32(plNumb), client)
+
 		}
 		if resp.GetDay() != nil {
 			fmt.Println(string(colorYellow), "Day starts", string(colorReset))
@@ -249,6 +267,34 @@ func main() {
 			} else {
 				fmt.Println("The night is over, player number was killed that night is", resp.GetFiNight().KilPl+1)
 			}
+		}
+
+		if resp.GetChat() != nil {
+			fmt.Println("Now you can discuss the game with other players")
+			fmt.Println("Print", string(colorCyan), "stop", string(colorReset), "when you want to end the chat")
+			if !auto {
+				for {
+					//var name_ string
+					in := bufio.NewReader(os.Stdin)
+
+					name_, _ := in.ReadString('\n')
+					mes := game.ChatMes{
+						RoomNumb: int32(roomNumb),
+						PlNumb:   int32(plNumb),
+						Mes:      name_[:len(name_)-1],
+					}
+					if name_ == "stop" || name_ == "stop\n" {
+						break
+					}
+					client.SendMessage(context.Background(), &mes)
+				}
+			}
+			fmt.Println("Please wait other players")
+			req := game.FinishChatRequest{
+				RoomNumb: int32(roomNumb),
+			}
+			client.FinishChat(context.Background(), &req)
+
 		}
 
 		if resp.GetFi() != nil {

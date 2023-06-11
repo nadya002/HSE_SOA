@@ -6,12 +6,44 @@ option go_package = "./game";
 
 service ConnectToGame {
     rpc JoinGameRoom(JoinGameRoomRequest) returns (stream GameRoom) {}
+    rpc GetChatStream(ChatStreamRequest) returns (stream ChatStream) {}
     rpc FinishDay(FinishDayRequest) returns (FinishDayResp) {}
     rpc KillPlayer(KillPlayerRequest) returns (KillPlayerResp) {}
     rpc CheckPlayer(CheckPlayerRequest) returns (CheckPlayerResp) {}
     rpc Vote(VoteRequest) returns (VoteResp) {}
     rpc PublishChecks(Checks) returns (PubResp) {}
+    rpc FinishChat(FinishChatRequest) returns (FinishChatResp) {}
+    rpc SendMessage(ChatMes) returns (ChatMesResp) {}
 }
+
+message ChatStreamRequest {
+    int32 roomNumb = 1;
+    int32 plNumb = 2;
+}
+
+message ChatStream {
+    string mes = 1;
+    int32 plNumb = 3;
+}
+
+message ChatMes {
+    string mes = 1;
+    int32 roomNumb = 2;
+    int32 plNumb = 3;
+}
+
+message ChatMesResp {
+    bool suc = 1;
+}
+
+message FinishChatRequest {
+    int32 roomNumb = 1;
+}
+
+message FinishChatResp {
+    bool suc = 1;
+}
+
 message Checks {
     int32 roomNumb = 1;
     bool pubCheck = 2;
@@ -73,9 +105,14 @@ message GameRoom {
         ComisReq comReq = 6;
         ComisChecks checks = 7;
         ResultOfVotes res = 8;
-        FinishReq fiR = 9;
-        FinishGame fi = 10;
+        StartChat chat = 9;
+        FinishReq fiR = 10;
+        FinishGame fi = 11;
     }
+}
+
+message StartChat {
+    
 }
 
 message FinishReq {

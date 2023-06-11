@@ -14,10 +14,12 @@ RUN go build -o bin/server ./cmd/server
 #ENV format
 #ARG format
 #ENV envFormat=$format
+ARG numbOfPl
+ENV envNumbOfPl=$numbOfPl
 
-EXPOSE 8080
+EXPOSE 50005
 
 #ENTRYPOINT ["./bin/server", "${format}"]
-#CMD ["sh", "-c", "./bin/server"]
+CMD ["sh", "-c", "./bin/server ${envNumbOfPl}"]
 
-ENTRYPOINT ["./bin/server"]
+#ENTRYPOINT ["./bin/server ${envNumbOfPl}"]
